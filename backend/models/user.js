@@ -1,52 +1,91 @@
+// models/user.js
+
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/db")
 
-const User = sequelize.define("Users", {
+const User = sequelize.define("User", {
 
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true
+        }
+    },
 
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 
-  phone: {
-    type: DataTypes.STRING
-  },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 
-  isAdmin: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
-  },
+    careerGoal: {
+        type: DataTypes.TEXT,
+        defaultValue: ""
+    },
 
-  street: {
-    type: DataTypes.STRING
-  },
+    profileImage: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
 
-  apartment: {
-    type: DataTypes.STRING
-  },
+    linkedinUrl: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
 
-  zip: {
-    type: DataTypes.STRING
-  },
+    githubUrl: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
 
-  city: {
-    type: DataTypes.STRING
-  },
+    portfolioUrl: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
 
-  country: {
-    type: DataTypes.STRING
-  }
+    skills: {
+        type: DataTypes.JSON,
+        defaultValue: []
+    },
 
+    experienceLevel: {
+        type: DataTypes.ENUM(
+            "Fresher",
+            "Junior",
+            "Mid-Level",
+            "Senior"
+        ),
+        defaultValue: "Fresher"
+    },
+
+    city: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
+
+    country: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+    },
+
+    isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
+
+}, {
+    timestamps: true
 })
+
 module.exports = User

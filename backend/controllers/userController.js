@@ -3,48 +3,61 @@ const bcrypt = require("bcryptjs")
 const jwt  = require('jsonwebtoken') 
 
 const registerUser = async (req, res) => {
-
-  try {
+      try {
 
     const {
       name,
       email,
       password,
       phone,
-      street,
-      apartment,
-      zip,
+      careerGoal,
+      profileImage,
       city,
       country
     } = req.body
 
+    // Validation
     if (!name || !email || !password || !phone) {
 
       return res.status(400).json({
-        message: "name,email,password,phone required"
+        message: "Name, email, password and phone are required"
       })
 
     }
 
+    // Check existing user
+    const existingUser = await User.findOne({
+      where: { email }
+    })
+
+    if (existingUser) {
+
+      return res.status(400).json({
+        message: "User already exists"
+      })
+
+    }
+
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
 
+    // Create user
     const user = await User.create({
 
       name,
       email,
       password: hashedPassword,
       phone,
-      isAdmin: false,
-      street,
-      apartment,
-      zip,
+      careerGoal,
+      profileImage,
       city,
       country
 
     })
 
+    // Response
     res.status(201).json({
-      message: "successfully register",
+      message: "User registered successfully",
       user
     })
 
@@ -53,69 +66,208 @@ const registerUser = async (req, res) => {
     console.log(error)
 
     res.status(500).json({
-      message: "server error"
+      message: "Server Error"
     })
 
   }
-
 }
 
 
-const loginUser =async(req,res)=>{
-try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } })
-    const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch) {
-      return res.status(404).json({message:"password is not valid"})
-    }
-    const token = jwt.sign({
-        id: user.id,
-        email: user.emai,
-        isAdmin:user.isAdmin,
-    }, process.env.SECRET_KEY, { expiresIn: "7d" })
-      return res.status(200).json({message:"login success",token})
-} catch (error) {
-  console.log(error.message)
-     return res.status(500).json({message:"server error"})
-}
-}
+const loginUser = async (req, res) => {
 
-const getUser = async(req,res)=>{
-try {
-    const user = await User.findByPk(req.user.id, {
-        attributes: {
-        exclude:['password']
-        }
-    })
-  res.status(200).json(user)
-  
-} catch (error) {
-  console.log(error)
-  res.status(500).json({
-      error: error.message
-  })
-  }
-  
-}
-
-const updateUser = async (req,res) => {
     try {
-      const user = await User.findByPk(req.user.id);
-      if (!user) {
-         return res.status(404).json({message:"User not found"})
-      }
-      await user.update(req.body)
-      res.status(200).json({
-        message: "Profile Updated",
-        user
-      })
+
+        const { email, password } = req.body
+
+        // Validation
+        if (!email || !password) {
+
+            return res.status(400).json({
+                message: "Email and password are required"
+            })
+
+        }
+
+        // Check user
+        const user = await User.findOne({
+            where: { email }
+        })
+
+        if (!user) {
+
+            return res.status(400).json({
+                message: "Invalid Email"
+            })
+
+        }
+
+        // Compare password
+        const isMatch = await bcrypt.compare(
+            password,
+            user.password
+        )
+
+        if (!isMatch) {
+
+            return res.status(400).json({
+                message: "Invalid Password"
+            })
+
+        }
+
+        // JWT Token
+        const token = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            process.env.SECRET_KEY,
+            {
+                expiresIn: "7d"
+            }
+        )
+
+        // Response
+        res.status(200).json({
+            message: "Login Successful",
+            token,
+            user
+        })
+
     } catch (error) {
-      console.log(error.message)
+
+        console.log(error)
+
         res.status(500).json({
-      error: error.message
-    })
+            message: "Server Error"
+        })
+
     }
+
 }
 
-module.exports = {registerUser,loginUser,getUser,updateUser}
+
+const getProfile = async (req, res) => {
+
+    try {
+
+        const user = await User.findByPk(
+            req.user.id,
+            {
+                attributes: {
+                    exclude: ["password"]
+                }
+            }
+        )
+
+        if (!user) {
+
+            return res.status(404).json({
+                message: "User not found"
+            })
+
+        }
+
+        res.status(200).json({
+            user
+        })
+
+    } catch (error) {
+
+        console.log(error)
+
+        res.status(500).json({
+            message: "Server Error"
+        })
+
+    }
+
+}
+
+const updateProfile = async (req, res) => {
+
+    try {
+
+        const {
+            name,
+            phone,
+            careerGoal,
+            profileImage,
+            city,
+            country
+        } = req.body
+
+        const user = await User.findByPk(req.user.id)
+
+        if (!user) {
+
+            return res.status(404).json({
+                message: "User not found"
+            })
+
+        }
+
+        // Update fields
+        user.name = name || user.name
+        user.phone = phone || user.phone
+        user.careerGoal = careerGoal || user.careerGoal
+        user.profileImage = profileImage || user.profileImage
+        user.city = city || user.city
+        user.country = country || user.country
+
+        await user.save()
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user
+        })
+
+    } catch (error) {
+
+        console.log(error)
+
+        res.status(500).json({
+            message: "Server Error"
+        })
+
+    }
+
+}
+
+
+
+const deleteProfile = async (req, res) => {
+
+    try {
+
+        const user = await User.findByPk(req.user.id)
+
+        if (!user) {
+
+            return res.status(404).json({
+                message: "User not found"
+            })
+
+        }
+
+        await user.destroy()
+
+        res.status(200).json({
+            message: "Account deleted successfully"
+        })
+
+    } catch (error) {
+
+        console.log(error)
+
+        res.status(500).json({
+            message: "Server Error"
+        })
+
+    }
+
+}
+
+
+
+module.exports = {registerUser,loginUser,getProfile,updateProfile,deleteProfile}

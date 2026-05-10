@@ -13,9 +13,18 @@ app.use(express.json())
 
 const userRouter = require("./routers/userRouter")
 require("./models/user")
+require("./models")
+// require("./models/product")
 
-app.use("/user",userRouter)
+const jobApplicationRouter = require('./routers/jobApplicationRouter') 
+const companyRoutes = require("./routers/companyRoutes")
+const reminderRoutes = require('./routers/reminderRoutes')
 
+
+app.use("/user", userRouter)
+app.use("/applications", jobApplicationRouter)
+app.use("/companies", companyRoutes)
+app.use("/reminders",reminderRoutes)
 sequelize.sync().then(() => {
 console.log("db is ok")
 }).catch((err)=>{

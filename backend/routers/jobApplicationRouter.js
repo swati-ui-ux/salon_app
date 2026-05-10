@@ -1,0 +1,10 @@
+const express = require("express")
+const {createJobApplication,getAllApplications, deleteApplication, updateApplication, getSingleApplication} = require("../controllers/jobApplicationController")
+const router = express.Router()
+const authMiddleware = require("../middlewares/authMiddleware")
+router.post('/create',authMiddleware, createJobApplication)
+router.get("/all",authMiddleware, getAllApplications)
+router.delete("/:id", authMiddleware, deleteApplication)
+router.put("/:id", authMiddleware, updateApplication)
+router.get("/:id",authMiddleware,getSingleApplication)
+module.exports = router

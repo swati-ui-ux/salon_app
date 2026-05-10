@@ -1,102 +1,91 @@
-import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import api from '../utils/api'
+// pages/Profile.jsx
 
-const UpdateProfile = () => {
+import React, { useEffect, useState } from 'react'
+import api from '../utils/api'
+import { toast } from 'react-toastify'
+
+const Profile = () => {
+
+  const [user, setUser] = useState(null)
+
+  const [isEditing, setIsEditing] = useState(false)
 
   const [formData, setFormData] = useState({
 
     name: "",
-    email: "",
     phone: "",
-    street: "",
-    apartment: "",
-    zip: "",
+    careerGoal: "",
+    profileImage: "",
     city: "",
     country: ""
 
   })
 
-  const [editMode, setEditMode] = useState(false)
-
-  // GET PROFILE
-
-  useEffect(() => {
-
-    fetchProfile()
-
-  }, [])
-
-  const fetchProfile = async () => {
+  const getProfile = async () => {
 
     try {
 
-      const token = localStorage.getItem("token")
+      const response = await api.get("/user/profile")
 
-      const response = await api.get(
+      setUser(response.data.user)
 
-        "/user/profile",
+      setFormData({
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        name: response.data.user.name || "",
+        phone: response.data.user.phone || "",
+        careerGoal: response.data.user.careerGoal || "",
+        profileImage: response.data.user.profileImage || "",
+        city: response.data.user.city || "",
+        country: response.data.user.country || ""
 
-      )
-
-      setFormData(response.data)
+      })
 
     } catch (error) {
 
       console.log(error)
 
+      toast.error("Failed to load profile")
+
     }
 
   }
 
-  // HANDLE CHANGE
+  useEffect(() => {
+
+    getProfile()
+
+  }, [])
 
   const handleChange = (e) => {
 
     setFormData({
 
       ...formData,
+
       [e.target.name]: e.target.value
 
     })
 
   }
 
-  // UPDATE PROFILE
-
-  const handleSubmit = async (e) => {
-
-    e.preventDefault()
+  const handleUpdate = async () => {
 
     try {
 
-      const token = localStorage.getItem("token")
-
       const response = await api.put(
-
         "/user/profile",
-
-        formData,
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-
+        formData
       )
 
       toast.success(response.data.message)
 
-      setEditMode(false)
+      setUser(response.data.user)
+
+      setIsEditing(false)
 
     } catch (error) {
+
+      console.log(error)
 
       toast.error("Update failed")
 
@@ -104,181 +93,263 @@ const UpdateProfile = () => {
 
   }
 
+  if (!user) {
+
+    return (
+
+      <div className="text-center mt-10 text-2xl">
+        Loading...
+      </div>
+
+    )
+
+  }
+const handleDelete = async () => {
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete your account?"
+  )
+
+  if (!confirmDelete) return
+
+  try {
+
+    const response = await api.delete(
+      "/user/profile"
+    )
+
+    toast.success(response.data.message)
+
+    // Remove token
+    localStorage.removeItem("token")
+
+    // Redirect login
+    window.location.href = "/"
+
+  } catch (error) {
+
+    console.log(error)
+
+    toast.error("Delete failed")
+
+  }
+
+}
+  
   return (
 
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
 
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-2xl p-8">
+      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
 
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-700">
-          My Profile
-        </h1>
+        <div className="flex flex-col items-center">
 
-        {
+          <img
+            src={
+              formData.profileImage ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="profile"
+            className="w-28 h-28 rounded-full object-cover border"
+          />
 
-          !editMode ? (
-
-            <div className="space-y-5">
-
-              <div className="grid grid-cols-2 gap-4">
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Name</p>
-                  <h2 className="font-semibold">{formData.name}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Email</p>
-                  <h2 className="font-semibold">{formData.email}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <h2 className="font-semibold">{formData.phone}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Street</p>
-                  <h2 className="font-semibold">{formData.street}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Apartment</p>
-                  <h2 className="font-semibold">{formData.apartment}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Zip</p>
-                  <h2 className="font-semibold">{formData.zip}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">City</p>
-                  <h2 className="font-semibold">{formData.city}</h2>
-                </div>
-
-                <div className="bg-gray-100 p-4 rounded-xl">
-                  <p className="text-sm text-gray-500">Country</p>
-                  <h2 className="font-semibold">{formData.country}</h2>
-                </div>
-
-              </div>
-
-              <button
-
-                onClick={() => setEditMode(true)}
-
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
-
-              >
-                Edit Profile
-              </button>
-
-            </div>
-
-          ) : (
-
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4"
-            >
+          {
+            isEditing ? (
 
               <input
                 type="text"
-                placeholder="Name"
+                name="profileImage"
+                placeholder="Profile Image URL"
+                value={formData.profileImage}
+                onChange={handleChange}
+                className="w-full border p-2 rounded-lg mt-4"
+              />
+
+            ) : null
+          }
+
+          {
+            isEditing ? (
+
+              <input
+                type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
+                className="w-full border p-2 rounded-lg mt-4"
               />
 
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+            ) : (
 
-              <input
-                type="text"
-                placeholder="Phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+              <h1 className="text-3xl font-bold mt-4">
+                {user.name}
+              </h1>
 
-              <input
-                type="text"
-                placeholder="Street"
-                name="street"
-                value={formData.street}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+            )
+          }
 
-              <input
-                type="text"
-                placeholder="Apartment"
-                name="apartment"
-                value={formData.apartment}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+          <p className="text-gray-500">
+            {user.email}
+          </p>
 
-              <input
-                type="text"
-                placeholder="Zip"
-                name="zip"
-                value={formData.zip}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+        </div>
 
-              <input
-                type="text"
-                placeholder="City"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+        <div className="mt-8 space-y-4">
 
-              <input
-                type="text"
-                placeholder="Country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-xl outline-none"
-              />
+          {/* Phone */}
 
-              <div className="flex gap-4">
+          <div>
 
-                <button
-                  type="submit"
-                  className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl"
-                >
-                  Save Changes
-                </button>
+            <h2 className="font-semibold">
+              Phone
+            </h2>
 
-                <button
-                  type="button"
-                  onClick={() => setEditMode(false)}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-xl"
-                >
-                  Cancel
-                </button>
+            {
+              isEditing ? (
 
-              </div>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded-lg"
+                />
 
-            </form>
+              ) : (
 
-          )
+                <p className="text-gray-600">
+                  {user.phone}
+                </p>
 
-        }
+              )
+            }
+
+          </div>
+
+          {/* Career Goal */}
+
+          <div>
+
+            <h2 className="font-semibold">
+              Career Goal
+            </h2>
+
+            {
+              isEditing ? (
+
+                <textarea
+                  name="careerGoal"
+                  value={formData.careerGoal}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded-lg"
+                />
+
+              ) : (
+
+                <p className="text-gray-600">
+                  {user.careerGoal || "Not Added"}
+                </p>
+
+              )
+            }
+
+          </div>
+
+          {/* City */}
+
+          <div>
+
+            <h2 className="font-semibold">
+              City
+            </h2>
+
+            {
+              isEditing ? (
+
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded-lg"
+                />
+
+              ) : (
+
+                <p className="text-gray-600">
+                  {user.city || "Not Added"}
+                </p>
+
+              )
+            }
+
+          </div>
+
+          {/* Country */}
+
+          <div>
+
+            <h2 className="font-semibold">
+              Country
+            </h2>
+
+            {
+              isEditing ? (
+
+                <input
+                  type="text"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  className="w-full border p-2 rounded-lg"
+                />
+
+              ) : (
+
+                <p className="text-gray-600">
+                  {user.country || "Not Added"}
+                </p>
+
+              )
+            }
+
+          </div>
+
+        </div>
+
+        <div className="mt-6">
+
+          {
+            isEditing ? (
+
+              <button
+                onClick={handleUpdate}
+                className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl"
+              >
+                Save Changes
+              </button>
+
+            ) : (
+<>
+              <button
+                onClick={() => setIsEditing(true)}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
+              >
+                Edit Profile
+                  </button>
+                  <button
+  onClick={handleDelete}
+  className="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-xl mt-3"
+>
+  Delete Account
+</button>
+</>
+                
+
+            )
+          }
+
+        </div>
 
       </div>
 
@@ -288,4 +359,4 @@ const UpdateProfile = () => {
 
 }
 
-export default UpdateProfile
+export default Profile
