@@ -11,6 +11,7 @@ import EditCompany from '../pages/EditCompany'
 import AddCompany from '../pages/AddCompany'
 import AddReminder from '../pages/AddReminder'
 import EditReminder from '../pages/EditReminder'
+import Dashboard from '../pages/Dashboard'
 const Router = () => {
     let [isLoggedIn,setIsLoggedIn] = useState(null)
     useEffect(()=>{
@@ -44,7 +45,11 @@ const Router = () => {
           <Route path='/all-applications' element={<AllApplications />} /> 
           <Route path='/add-company' element={<AddCompany />} />
           <Route path="/add-reminder" element={<AddReminder />} />
-          <Route path='/edit-reminder/:id' element={<EditReminder/>}/>
+          <Route path='/edit-reminder/:id' element={<EditReminder />} />
+          <Route
+  path="/dashboard"
+  element={<Dashboard />}
+/>
 
     </Routes>
   )

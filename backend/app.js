@@ -19,12 +19,14 @@ require("./models")
 const jobApplicationRouter = require('./routers/jobApplicationRouter') 
 const companyRoutes = require("./routers/companyRoutes")
 const reminderRoutes = require('./routers/reminderRoutes')
+const dashboardRoutes = require("./routers/dashboardRoutes")
 
 
 app.use("/user", userRouter)
 app.use("/applications", jobApplicationRouter)
 app.use("/companies", companyRoutes)
-app.use("/reminders",reminderRoutes)
+app.use("/reminders", reminderRoutes)
+app.use("/dashboard",dashboardRoutes)
 sequelize.sync().then(() => {
 console.log("db is ok")
 }).catch((err)=>{
