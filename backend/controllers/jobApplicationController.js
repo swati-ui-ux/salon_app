@@ -1,11 +1,13 @@
 // controllers/jobApplicationController.js
 
+const { Op } = require("sequelize")
 const JobApplication = require("../models/jobApplication")
 
 const createJobApplication = async (req, res) => {
 
     try {
-
+        const resume = req.file ? req.file.filename : ""
+        console.log(req.file)
         const {
             companyName,
             jobTitle,
@@ -43,7 +45,7 @@ const createJobApplication = async (req, res) => {
             applicationDate,
             notes,
             followUpDate,
-
+           resume,
             // Logged in user id
             UserId: req.user.id
 
@@ -71,12 +73,44 @@ const createJobApplication = async (req, res) => {
 const getAllApplications = async (req, res) => {
 
     try {
+        const { search ,status, startDate,
+   endDate} = req.query;
+        let whereCondition = {
+                userId: req.user.id
+        }
+        if (search) {
+            whereCondition[Op.or] = [
+                {
+                    companyName: {
+                    [Op.like] :`%${search}%`
+                    }
+                },
+                {
+                    jobTitle: {
+                    [Op.like]:`%${search}%`
+                    }
+                }
+            ]
+        }
+        if (status) {
+            whereCondition.status = status
+        }
+    if (startDate && endDate) {
+   whereCondition.applicationDate = {
+      [Op.between]: [
 
+         new Date(startDate),
+
+         new Date(endDate)
+
+      ]
+
+   }
+
+}
         const applications = await JobApplication.findAll({
 
-            where: {
-                userId: req.user.id
-            },
+            where: whereCondition,
 
             order: [
                 ["createdAt", "DESC"]

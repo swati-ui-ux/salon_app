@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import api from '../utils/api'
 import { toast } from 'react-toastify'
 import AllApplications from './AllApplications'
+import { Link } from 'react-router-dom'
 
 const AddJobApplication = () => {
 
@@ -15,19 +16,20 @@ const AddJobApplication = () => {
     status: "Applied",
     applicationDate: "",
     notes: "",
-    followUpDate: ""
+    followUpDate: "",
+    resume: null,
 
   })
 
   const handleChange = (e) => {
 
-    const { name, value } = e.target
+    const { name, value ,files} = e.target
 
     setFormData({
 
       ...formData,
 
-      [name]: value
+      [name]: files?files[0]:value
 
     })
 
@@ -39,16 +41,23 @@ const AddJobApplication = () => {
 
     try {
 
-      const response = await api.post(
+     const data = new FormData()
 
-        "/applications/create",
+Object.keys(formData).forEach((key) => {
 
-        formData
+  data.append(key, formData[key])
 
-      )
+})
 
-      toast.success(response.data.message)
+const response = await api.post(
 
+  "/applications/create",
+
+  data
+
+)
+toast.success(response.message)
+      console.log(response)
       // Reset form
       setFormData({
 
@@ -60,8 +69,8 @@ const AddJobApplication = () => {
         status: "Applied",
         applicationDate: "",
         notes: "",
-        followUpDate: ""
-
+        followUpDate: "",
+        resume: null,
       })
 
     } catch (error) {
@@ -136,7 +145,22 @@ const AddJobApplication = () => {
             onChange={handleChange}
             className="w-full border p-3 rounded-xl"
           />
+            <div>
 
+  <label className="block mb-2 font-medium">
+
+    Upload Resume
+
+  </label>
+
+  <input
+    type="file"
+    name="resume"
+    onChange={handleChange}
+    className="w-full border p-3 rounded-xl bg-white"
+  />
+
+</div>
           <select
             name="status"
             value={formData.status}
@@ -215,14 +239,19 @@ const AddJobApplication = () => {
             className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
           >
             Add Application
-          </button>
+            </button>
+             <Link
+            to="/all-applications"
+            className="w-full bg-green-500 hover:bg-blue-600 text-white p-3 rounded-xl"
+          >
+            Go back
+          </Link>
 
         </form>
 
       </div>
 
       </div>
-      <AllApplications/>
 </>
 
   )

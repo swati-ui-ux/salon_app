@@ -26,7 +26,8 @@ app.use("/user", userRouter)
 app.use("/applications", jobApplicationRouter)
 app.use("/companies", companyRoutes)
 app.use("/reminders", reminderRoutes)
-app.use("/dashboard",dashboardRoutes)
+app.use("/dashboard", dashboardRoutes)
+app.use('/uploads',express.static("uploads"))
 sequelize.sync().then(() => {
 console.log("db is ok")
 }).catch((err)=>{

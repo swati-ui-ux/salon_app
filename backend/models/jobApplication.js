@@ -64,7 +64,11 @@ const JobApplication = sequelize.define("JobApplication", {
 
     followUpDate: {
         type: DataTypes.DATEONLY
-    }
+    },
+    resume: {
+   type: DataTypes.STRING,
+   defaultValue: ""
+}
 
 }, {
     timestamps: true

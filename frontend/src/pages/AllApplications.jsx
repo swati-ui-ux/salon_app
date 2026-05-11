@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import api from '../utils/api'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AllApplications = () => {
 
   const [applications, setApplications] = useState([])
- const navigate = useNavigate()
+    const [status, setStatus] = useState("")
+    const [search, setSearch] = useState("")
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+    
+
+  const navigate = useNavigate()
+
   // Get Applications
+
   const getApplications = async () => {
 
     try {
 
-      const response = await api.get(
-        "/applications/all"
-      )
+      const response = await api.get(`/applications/all?search=${search}&status=${status}&startDate=${startDate}&endDate=${endDate}`
+
+)
 
       setApplications(
         response.data.applications
       )
-console.log(response)
+
     } catch (error) {
 
       console.log(error)
@@ -28,153 +36,369 @@ console.log(response)
 
     }
 
-    }
-    console.log('all render')
+  }
 
   useEffect(() => {
 
     getApplications()
 
-  }, [])
+  }, [search])
 
-    const deleteApplication = async (id) => {
+  // Delete Application
 
-  const confirmDelete = window.confirm(
-    "Are you sure?"
-  )
+  const deleteApplication = async (id) => {
 
-  if (!confirmDelete) return
-
-  try {
-
-    const response = await api.delete(
-      `/applications/${id}`
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this application?"
     )
 
-    toast.success(response.data.message)
+    if (!confirmDelete) return
 
-    getApplications()
+    try {
 
-  } catch (error) {
+      const response = await api.delete(
 
-    console.log(error)
+        `/applications/${id}`
 
-    toast.error("Delete failed")
+      )
+
+      toast.success(response.data.message)
+
+      getApplications()
+
+    } catch (error) {
+
+      console.log(error)
+
+      toast.error("Delete failed")
+
+    }
 
   }
 
-}
-    
+  // Status Colors
+
+  const getStatusColor = (status) => {
+
+    switch (status) {
+
+      case "Applied":
+        return "bg-blue-100 text-blue-600"
+
+      case "Interviewed":
+        return "bg-green-100 text-green-600"
+
+      case "Rejected":
+        return "bg-red-100 text-red-600"
+
+      case "Offered":
+        return "bg-yellow-100 text-yellow-700"
+
+      case "Hired":
+        return "bg-purple-100 text-purple-700"
+
+      default:
+        return "bg-gray-100 text-gray-600"
+
+    }
+
+  }
+
   return (
 
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="md:ml-64 min-h-screen bg-gray-100 p-6">
 
-      <h1 className="text-3xl font-bold text-center mb-8">
+      {/* Heading */}
+
+      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+
         My Applications
-      </h1>
+
+          </h1>
+          <Link to='/add-applications' >Add JobApplication</Link>
+
+      {/* Search */}
+
+      <div className="mb-8">
+
+        <input
+          type="text"
+          placeholder="Search by company or job title..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full border border-gray-300 p-4 rounded-2xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+          </div>
+          
+          {/* status  */}
+          
+          <div className="mb-6">
+
+  <select
+    value={status}
+    onChange={(e) => setStatus(e.target.value)}
+    className="w-full border p-3 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+  >
+
+    <option value="">
+      All Status
+    </option>
+
+    <option value="Applied">
+      Applied
+    </option>
+
+    <option value="Interviewed">
+      Interviewed
+    </option>
+
+    <option value="Rejected">
+      Rejected
+    </option>
+
+    <option value="Offered">
+      Offered
+    </option>
+
+    <option value="Hired">
+      Hired
+    </option>
+
+  </select>
+
+</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+  {/* Start Date */}
+
+  <div>
+
+    <label className="block mb-2 font-semibold">
+      Start Date
+    </label>
+
+    <input
+      type="date"
+      value={startDate}
+      onChange={(e) => setStartDate(e.target.value)}
+      className="w-full border p-3 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+    />
+
+  </div>
+
+  {/* End Date */}
+
+  <div>
+
+    <label className="block mb-2 font-semibold">
+      End Date
+    </label>
+
+    <input
+      type="date"
+      value={endDate}
+      onChange={(e) => setEndDate(e.target.value)}
+      className="w-full border p-3 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+    />
+
+  </div>
+
+</div>
+      {/* No Data */}
 
       {
         applications.length === 0 ? (
 
-          <p className="text-center text-gray-500">
-            No applications found
-          </p>
+          <div className="bg-white rounded-2xl shadow-md p-10 text-center">
+
+            <h2 className="text-2xl font-semibold text-gray-600">
+
+              No applications found 🚀
+
+            </h2>
+
+            <p className="text-gray-500 mt-2">
+
+              Start adding your job applications.
+
+            </p>
+
+          </div>
 
         ) : (
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
             {
+
               applications.map((app) => (
 
                 <div
                   key={app.id}
-                  className="bg-white shadow-lg rounded-2xl p-6"
+                  className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition duration-300"
                 >
 
-                  <h2 className="text-2xl font-bold">
+                  {/* Company */}
+
+                  <h2 className="text-2xl font-bold text-gray-800">
+
                     {app.companyName}
+
                   </h2>
 
-                  <p className="text-gray-600 mt-2">
+                  {/* Job Title */}
+
+                  <p className="text-gray-600 mt-3">
+
                     <span className="font-semibold">
+
                       Job Title:
+
                     </span>
 
                     {" "}
+
                     {app.jobTitle}
+
                   </p>
 
-                  <p className="text-gray-600">
+                  {/* Location */}
+
+                  <p className="text-gray-600 mt-2">
+
                     <span className="font-semibold">
+
                       Location:
+
                     </span>
 
                     {" "}
+
                     {app.jobLocation || "N/A"}
+
                   </p>
 
-                  <p className="text-gray-600">
+                  {/* Salary */}
+
+                  <p className="text-gray-600 mt-2">
+
                     <span className="font-semibold">
+
                       Salary:
+
                     </span>
 
                     {" "}
+
                     {app.salary || "N/A"}
+
                   </p>
 
-                  <p className="text-gray-600">
-                    <span className="font-semibold">
-                      Status:
+                  {/* Status */}
+
+                  <div className="mt-4">
+
+                    <span
+                      className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(app.status)}`}
+                    >
+
+                      {app.status}
+
                     </span>
 
-                    {" "}
-                    {app.status}
-                  </p>
+                  </div>
 
-                  <p className="text-gray-600">
+                  {/* Date */}
+
+                  <p className="text-gray-600 mt-4">
+
                     <span className="font-semibold">
+
                       Applied On:
+
                     </span>
 
                     {" "}
-                    {app.applicationDate}
+
+                    {
+                      new Date(app.applicationDate)
+                        .toLocaleDateString()
+                    }
+
                   </p>
 
-                      <p className="text-gray-600 mt-3">
-                        
+                  {/* Notes */}
+
+                  <p className="text-gray-600 mt-4">
+
                     <span className="font-semibold">
+
                       Notes:
+
                     </span>
 
                     {" "}
+
                     {app.notes || "No Notes"}
+
                   </p>
-  <div className="flex gap-3 mt-5">
+                  {
+  app.resume && (
 
-  <button
-    onClick={() => navigate(`/edit-application/${app.id}`)}
-    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
-  >
-    Edit
-  </button>
+    <a
+      href={`http://localhost:5000/uploads/${app.resume}`}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-block mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+    >
 
-  <button
-    onClick={() => deleteApplication(app.id)}
-    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-  >
-    Delete
-  </button>
+      View Resume
 
-</div>
+    </a>
+
+  )
+}
+
+                  {/* Buttons */}
+
+                  <div className="flex gap-3 mt-6">
+
+                    <button
+                      onClick={() =>
+                        navigate(`/edit-application/${app.id}`)
+                      }
+                      className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-300"
+                    >
+
+                      Edit
+
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        deleteApplication(app.id)
+                      }
+                      className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl transition duration-300"
+                    >
+
+                      Delete
+
+                    </button>
+
+                  </div>
+
                 </div>
 
               ))
+
             }
 
           </div>
 
         )
+
       }
 
     </div>

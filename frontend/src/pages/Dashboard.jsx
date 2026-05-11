@@ -67,138 +67,137 @@ const Dashboard = () => {
 
   }, [])
 
-  return (
- <>
-    <div className="min-h-screen bg-gray-100 p-6">
+ return (
 
-      {/* Heading */}
+  <div className="md:ml-64 min-h-screen bg-gray-100 p-6">
 
-      <h1 className="text-4xl font-bold text-center mb-10">
-        Dashboard
-      </h1>
+    {/* Heading */}
 
-      {/* Cards */}
+    <h1 className="text-4xl font-bold text-center mb-10">
+      Dashboard
+    </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {/* Cards */}
 
-        {/* Total Applications */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <div className="bg-white shadow-lg rounded-2xl p-6">
+      {/* Total Applications */}
 
-          <h2 className="text-xl font-semibold text-gray-600">
-            Total Applications
-          </h2>
+      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
 
-          <p className="text-4xl font-bold mt-4 text-blue-500">
-            {stats.totalApplications}
-          </p>
+        <h2 className="text-xl font-semibold text-gray-600">
+          Total Applications
+        </h2>
 
-        </div>
-
-        {/* Interviewed */}
-
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-
-          <h2 className="text-xl font-semibold text-gray-600">
-            Interviewed
-          </h2>
-
-          <p className="text-4xl font-bold mt-4 text-green-500">
-            {stats.interviewed}
-          </p>
-
-        </div>
-
-        {/* Rejected */}
-
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-
-          <h2 className="text-xl font-semibold text-gray-600">
-            Rejected
-          </h2>
-
-          <p className="text-4xl font-bold mt-4 text-red-500">
-            {stats.rejected}
-          </p>
-
-        </div>
-
-        {/* Offered */}
-
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-
-          <h2 className="text-xl font-semibold text-gray-600">
-            Offers
-          </h2>
-
-          <p className="text-4xl font-bold mt-4 text-yellow-500">
-            {stats.offered}
-          </p>
-
-        </div>
-
-        {/* Companies */}
-
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-
-          <h2 className="text-xl font-semibold text-gray-600">
-            Companies
-          </h2>
-
-          <p className="text-4xl font-bold mt-4 text-purple-500">
-            {stats.companies}
-          </p>
-
-        </div>
-
-        {/* Pending Reminders */}
-
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-
-          <h2 className="text-xl font-semibold text-gray-600">
-            Pending Reminders
-          </h2>
-
-          <p className="text-4xl font-bold mt-4 text-pink-500">
-            {stats.pendingReminders}
-          </p>
-
-        </div>
+        <p className="text-4xl font-bold mt-4 text-blue-500">
+          {stats.totalApplications}
+        </p>
 
       </div>
 
+      {/* Interviewed */}
+
+      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+
+        <h2 className="text-xl font-semibold text-gray-600">
+          Interviewed
+        </h2>
+
+        <p className="text-4xl font-bold mt-4 text-green-500">
+          {stats.interviewed}
+        </p>
+
       </div>
-     
-          <div className="bg-white shadow-lg rounded-2xl p-6 mt-10">
 
-  <h2 className="text-2xl font-bold mb-6 text-center">
-    Application Status Chart
-  </h2>
+      {/* Rejected */}
 
-  <ResponsiveContainer
-    width="100%"
-    height={400}
-  >
+      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
 
-    <PieChart>
+        <h2 className="text-xl font-semibold text-gray-600">
+          Rejected
+        </h2>
 
-      <Pie
-        data={data}
-        dataKey="value"
-        outerRadius={140}
-        label
-      />
+        <p className="text-4xl font-bold mt-4 text-red-500">
+          {stats.rejected}
+        </p>
 
-      <Tooltip />
+      </div>
 
-    </PieChart>
+      {/* Offered */}
 
-  </ResponsiveContainer>
+      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
 
-</div>
-</>
+        <h2 className="text-xl font-semibold text-gray-600">
+          Offers
+        </h2>
 
-  )
+        <p className="text-4xl font-bold mt-4 text-yellow-500">
+          {stats.offered}
+        </p>
+
+      </div>
+
+      {/* Companies */}
+
+      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+
+        <h2 className="text-xl font-semibold text-gray-600">
+          Companies
+        </h2>
+
+        <p className="text-4xl font-bold mt-4 text-purple-500">
+          {stats.companies}
+        </p>
+
+      </div>
+
+      {/* Reminders */}
+
+      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+
+        <h2 className="text-xl font-semibold text-gray-600">
+          Pending Reminders
+        </h2>
+
+        <p className="text-4xl font-bold mt-4 text-pink-500">
+          {stats.pendingReminders}
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* Chart Section */}
+
+    <div className="bg-white shadow-lg rounded-2xl p-6 mt-10">
+
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        Application Status Chart
+      </h2>
+
+      <ResponsiveContainer width="100%" height={400}>
+
+        <PieChart>
+
+          <Pie
+            data={data}
+            dataKey="value"
+            outerRadius={140}
+            fill="#3b82f6"
+            label
+          />
+
+          <Tooltip />
+
+        </PieChart>
+
+      </ResponsiveContainer>
+
+    </div>
+
+  </div>
+
+)
 
 }
 

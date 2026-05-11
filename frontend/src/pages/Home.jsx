@@ -1,21 +1,25 @@
 import React from 'react'
-import Profile from './Profile'
-import { Link } from 'react-router-dom'
-import AddJobApplication from './AddJobApplication'
-import AddCompany from './AddCompany'
-import AddReminder from './AddReminder'
 
 const Home = () => {
-  
+
   return (
-    <div>Home
-      <Link to='/profile'>Profile</Link>
-      <Link to="/add-jobs">Add job</Link>
-      <Link to='/add-company'>Add company</Link>
-      <Link to='/add-reminder'>Add Remnder</Link>
+    <>
       
+    <div className="p-10">
+
+      <h1 className="text-4xl font-bold">
+        Welcome To Job Tracker App
+      </h1>
+
+      <p className="mt-4 text-gray-600">
+        Track your applications, reminders and companies easily.
+      </p>
+
     </div>
+
+</>
   )
+
 }
 
 export default Home
