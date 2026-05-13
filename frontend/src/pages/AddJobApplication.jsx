@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import api from '../utils/api'
 import { toast } from 'react-toastify'
 import AllApplications from './AllApplications'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AddJobApplication = () => {
-
+const navigate = useNavigate()
   const [formData, setFormData] = useState({
 
     companyName: "",
@@ -72,6 +72,7 @@ toast.success(response.message)
         followUpDate: "",
         resume: null,
       })
+      navigate("/all-applications")
 
     } catch (error) {
 
@@ -90,7 +91,7 @@ toast.success(response.message)
 <>
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-2xl">
+      <div className="bg-white shadow-xl rounded-3xl p-8 md:p-10 w-full max-w-6xl">
 
         <h1 className="text-3xl font-bold text-center mb-8">
           Add Job Application
@@ -98,7 +99,7 @@ toast.success(response.message)
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-4"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
 
           <input

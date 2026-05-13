@@ -136,13 +136,20 @@ const handleDelete = async () => {
 
 }
   
-  return (
 
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
+return (
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+  // <div className="min-h-screen bg-gray-100 px-4 md:px-10 py-10">
 
-        <div className="flex flex-col items-center">
+    <div className="w-full bg-white p-6 md:p-10">
+
+      {/* TOP SECTION */}
+
+      <div className="flex flex-col md:flex-row md:items-center gap-8 border-b pb-8">
+
+        {/* IMAGE */}
+
+        <div className="flex justify-center">
 
           <img
             src={
@@ -150,23 +157,14 @@ const handleDelete = async () => {
               "https://cdn-icons-png.flaticon.com/512/149/149071.png"
             }
             alt="profile"
-            className="w-28 h-28 rounded-full object-cover border"
+            className="w-60 h-60 rounded-full object-cover border-2 border-gray-500"
           />
 
-          {
-            isEditing ? (
+        </div>
 
-              <input
-                type="text"
-                name="profileImage"
-                placeholder="Profile Image URL"
-                value={formData.profileImage}
-                onChange={handleChange}
-                className="w-full border p-2 rounded-lg mt-4"
-              />
+        {/* USER INFO */}
 
-            ) : null
-          }
+        <div className="flex-1">
 
           {
             isEditing ? (
@@ -176,175 +174,33 @@ const handleDelete = async () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border p-2 rounded-lg mt-4"
+                className="w-full border p-3 rounded-xl text-3xl font-bold"
               />
 
             ) : (
 
-              <h1 className="text-3xl font-bold mt-4">
+              <h1 className="text-4xl font-bold text-gray-800">
                 {user.name}
               </h1>
 
             )
           }
 
-          <p className="text-gray-500">
+          <p className="text-gray-500 text-lg mt-2 break-all">
             {user.email}
           </p>
 
-        </div>
-
-        <div className="mt-8 space-y-4">
-
-          {/* Phone */}
-
-          <div>
-
-            <h2 className="font-semibold">
-              Phone
-            </h2>
-
-            {
-              isEditing ? (
-
-                <input
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded-lg"
-                />
-
-              ) : (
-
-                <p className="text-gray-600">
-                  {user.phone}
-                </p>
-
-              )
-            }
-
-          </div>
-
-          {/* Career Goal */}
-
-          <div>
-
-            <h2 className="font-semibold">
-              Career Goal
-            </h2>
-
-            {
-              isEditing ? (
-
-                <textarea
-                  name="careerGoal"
-                  value={formData.careerGoal}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded-lg"
-                />
-
-              ) : (
-
-                <p className="text-gray-600">
-                  {user.careerGoal || "Not Added"}
-                </p>
-
-              )
-            }
-
-          </div>
-
-          {/* City */}
-
-          <div>
-
-            <h2 className="font-semibold">
-              City
-            </h2>
-
-            {
-              isEditing ? (
-
-                <input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded-lg"
-                />
-
-              ) : (
-
-                <p className="text-gray-600">
-                  {user.city || "Not Added"}
-                </p>
-
-              )
-            }
-
-          </div>
-
-          {/* Country */}
-
-          <div>
-
-            <h2 className="font-semibold">
-              Country
-            </h2>
-
-            {
-              isEditing ? (
-
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded-lg"
-                />
-
-              ) : (
-
-                <p className="text-gray-600">
-                  {user.country || "Not Added"}
-                </p>
-
-              )
-            }
-
-          </div>
-
-        </div>
-
-        <div className="mt-6">
-
           {
-            isEditing ? (
+            isEditing && (
 
-              <button
-                onClick={handleUpdate}
-                className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl"
-              >
-                Save Changes
-              </button>
-
-            ) : (
-<>
-              <button
-                onClick={() => setIsEditing(true)}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
-              >
-                Edit Profile
-                  </button>
-                  <button
-  onClick={handleDelete}
-  className="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-xl mt-3"
->
-  Delete Account
-</button>
-</>
-                
+              <input
+                type="text"
+                name="profileImage"
+                placeholder="Profile Image URL"
+                value={formData.profileImage}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-xl mt-4"
+              />
 
             )
           }
@@ -353,9 +209,174 @@ const handleDelete = async () => {
 
       </div>
 
+      {/* DETAILS SECTION */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+
+        {/* PHONE */}
+
+        <div className="bg-gray-50 p-5 rounded-2xl">
+
+          <h2 className="text-lg font-semibold mb-3">
+            Phone
+          </h2>
+
+          {
+            isEditing ? (
+
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-xl"
+              />
+
+            ) : (
+
+              <p className="text-gray-700">
+                {user.phone || "Not Added"}
+              </p>
+
+            )
+          }
+
+        </div>
+
+        {/* CITY */}
+
+        <div className="bg-gray-50 p-5 rounded-2xl">
+
+          <h2 className="text-lg font-semibold mb-3">
+            City
+          </h2>
+
+          {
+            isEditing ? (
+
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-xl"
+              />
+
+            ) : (
+
+              <p className="text-gray-700">
+                {user.city || "Not Added"}
+              </p>
+
+            )
+          }
+
+        </div>
+
+        {/* COUNTRY */}
+
+        <div className="bg-gray-50 p-5 rounded-2xl">
+
+          <h2 className="text-lg font-semibold mb-3">
+            Country
+          </h2>
+
+          {
+            isEditing ? (
+
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-xl"
+              />
+
+            ) : (
+
+              <p className="text-gray-700">
+                {user.country || "Not Added"}
+              </p>
+
+            )
+          }
+
+        </div>
+
+        {/* CAREER GOAL */}
+
+        <div className="bg-gray-50 p-5 rounded-2xl">
+
+          <h2 className="text-lg font-semibold mb-3">
+            Career Goal
+          </h2>
+
+          {
+            isEditing ? (
+
+              <textarea
+                name="careerGoal"
+                value={formData.careerGoal}
+                onChange={handleChange}
+                rows="5"
+                className="w-full border p-3 rounded-xl"
+              />
+
+            ) : (
+
+              <p className="text-gray-700 leading-7">
+                {user.careerGoal || "Not Added"}
+              </p>
+
+            )
+          }
+
+        </div>
+
+      </div>
+
+      {/* BUTTONS */}
+
+      <div className="flex flex-col sm:flex-row gap-4 mt-10">
+
+        {
+          isEditing ? (
+
+            <button
+              onClick={handleUpdate}
+              className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl"
+            >
+              Save Changes
+            </button>
+
+          ) : (
+
+            <>
+              <button
+                onClick={() => setIsEditing(true)}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-xl"
+              >
+                Edit Profile
+              </button>
+
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-xl"
+              >
+                Delete Account
+              </button>
+            </>
+
+          )
+        }
+
+      </div>
+
     </div>
 
-  )
+  // </div>
+
+)
 
 }
 

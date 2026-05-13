@@ -11,6 +11,8 @@ const AllApplications = () => {
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     
+  const [page, setPage] = useState(1)
+const [totalPages, setTotalPages] = useState(1)
 
   const navigate = useNavigate()
 
@@ -20,14 +22,17 @@ const AllApplications = () => {
 
     try {
 
-      const response = await api.get(`/applications/all?search=${search}&status=${status}&startDate=${startDate}&endDate=${endDate}`
+      const response = await api.get(`/applications/all?page=${page}&limit=5&search=${search}&status=${status}&startDate=${startDate}&endDate=${endDate}`
 
 )
 
       setApplications(
         response.data.applications
       )
-
+      setTotalPages(
+        response.data.totalPages      
+      )
+      
     } catch (error) {
 
       console.log(error)
@@ -39,10 +44,13 @@ const AllApplications = () => {
   }
 
   useEffect(() => {
+  setPage(1)
+  },[search,status,startDate,endDate])
+  useEffect(() => {
 
     getApplications()
 
-  }, [search])
+  }, [search,status,startDate,endDate,page])
 
   // Delete Application
 
@@ -63,8 +71,12 @@ const AllApplications = () => {
       )
 
       toast.success(response.data.message)
-
+      // this is use for set previous page after deleting the appication 
+      if (applications.length === 1 && page > 1) {
+        setPage(page - 1);
+      } else {
       getApplications()
+      }
 
     } catch (error) {
 
@@ -106,20 +118,20 @@ const AllApplications = () => {
 
   return (
 
-    <div className="md:ml-64 min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen  bg-gray-100 p-6">
 
       {/* Heading */}
-
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+      <div className='  mx-auto mt-16 mb-8 lg:w-[80%]  rounded-xl shadow-xl shadow-gray-500 p-4'>
+          <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
 
         My Applications
 
           </h1>
-          <Link to='/add-applications' >Add JobApplication</Link>
+          <Link to='/add-applications' className='p-4 m-2 bg-blue-500 rounded-md text-white absolute right-0 top-15 ' >Add JobApplication</Link>
 
       {/* Search */}
 
-      <div className="mb-8">
+      <div className="my-8 ">
 
         <input
           type="text"
@@ -129,7 +141,8 @@ const AllApplications = () => {
           className="w-full border border-gray-300 p-4 rounded-2xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
         />
 
-          </div>
+        </div>
+        
           
           {/* status  */}
           
@@ -206,6 +219,9 @@ const AllApplications = () => {
   </div>
 
 </div>
+
+      </div>
+    
       {/* No Data */}
 
       {
@@ -400,6 +416,39 @@ const AllApplications = () => {
         )
 
       }
+      <div className="flex justify-center items-center gap-4 mt-10">
+
+  <button
+
+    disabled={page === 1}
+
+    onClick={() => setPage(page - 1)}
+
+    className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-400"
+
+  >
+    Prev
+  </button>
+
+  <span className="font-semibold text-lg">
+
+    Page {page} of {totalPages}
+
+  </span>
+
+  <button
+
+    disabled={page === totalPages}
+
+    onClick={() => setPage(page + 1)}
+
+    className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-400"
+
+  >
+    Next
+  </button>
+
+</div>
 
     </div>
 

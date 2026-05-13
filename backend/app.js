@@ -14,6 +14,7 @@ app.use(express.json())
 const userRouter = require("./routers/userRouter")
 require("./models/user")
 require("./models")
+require("./cron/reminderCron")
 // require("./models/product")
 
 const jobApplicationRouter = require('./routers/jobApplicationRouter') 

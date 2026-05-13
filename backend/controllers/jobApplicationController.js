@@ -7,7 +7,7 @@ const createJobApplication = async (req, res) => {
 
     try {
         const resume = req.file ? req.file.filename : ""
-        console.log(req.file)
+        // console.log(req.file)
         const {
             companyName,
             jobTitle,
@@ -69,12 +69,14 @@ const createJobApplication = async (req, res) => {
 
 }
 
-
 const getAllApplications = async (req, res) => {
-
     try {
         const { search ,status, startDate,
-   endDate} = req.query;
+            endDate } = req.query
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 5;
+        const offset = (page - 1) * limit;
+      
         let whereCondition = {
                 userId: req.user.id
         }
@@ -95,45 +97,49 @@ const getAllApplications = async (req, res) => {
         if (status) {
             whereCondition.status = status
         }
-    if (startDate && endDate) {
-   whereCondition.applicationDate = {
-      [Op.between]: [
-
-         new Date(startDate),
-
-         new Date(endDate)
-
-      ]
-
-   }
-
-}
-        const applications = await JobApplication.findAll({
+        if (startDate && endDate) {
+            whereCondition.applicationDate = {       
+                [Op.between]: [
+                    new Date(startDate),
+                    new Date(endDate),
+                ]
+            }
+        }
+        
+        
+        const applications = await JobApplication.findAndCountAll({
 
             where: whereCondition,
 
-            order: [
-                ["createdAt", "DESC"]
-            ]
+               limit,
 
+            offset,
+
+            order: [
+
+                ["createdAt", "DESC"]
+
+            ]
         })
 
         console.log(applications)
-
         res.status(200).json({
-            applications
+            applications: applications.rows,
+            totalApplications: applications.count,
+            totalPages: Math.ceil(
+                applications.count / limit
+            ),
+            currentPage: page
         })
-
-    } catch (error) {
-
+    }
+    catch (error) {
         console.log(error)
-
         res.status(500).json({
             message: "Server Error"
         })
 
     }
-
+    
 }
 
 
