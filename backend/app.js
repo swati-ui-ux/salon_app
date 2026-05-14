@@ -28,7 +28,13 @@ app.use("/applications", jobApplicationRouter)
 app.use("/companies", companyRoutes)
 app.use("/reminders", reminderRoutes)
 app.use("/dashboard", dashboardRoutes)
-app.use('/uploads',express.static("uploads"))
+app.use('/uploads', express.static("uploads"))
+
+
+app.use((req, res) => {
+   res.status(404).send("<h1>404 not found</h1>")
+})
+
 sequelize.sync().then(() => {
 console.log("db is ok")
 }).catch((err)=>{
