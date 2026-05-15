@@ -50,7 +50,7 @@ const Router = () => {
 
       <div className="hidden md:block">
 
-        <Navbar />
+        <Navbar  setIsLoggedIn={setIsLoggedIn}/>
 
       </div>
 

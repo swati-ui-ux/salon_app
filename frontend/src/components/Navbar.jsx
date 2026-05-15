@@ -3,10 +3,11 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = ({setIsLoggedIn}) => {
     const navigate = useNavigate()
     let handleLogout = () => {
-        localStorage.removeItem("token");
+      localStorage.removeItem("token");
+      setIsLoggedIn(false)
         navigate('/login')
     }
   return (
@@ -38,7 +39,7 @@ const Navbar = () => {
       </Link>
       </div>
      
-     <button onClick={handleLogout}>Logout</button>
+     <button onClick={handleLogout} className='cursor-pointer'>Logout</button>
     </div>
 
   )

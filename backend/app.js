@@ -44,5 +44,5 @@ console.log("Error in db",err)
 
 
 app.listen(PORT, () => {
-console.log("server is running on 5000")
+console.log("server is running on",PORT)
 })

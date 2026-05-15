@@ -39,10 +39,11 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
       localStorage.setItem("token", response.data.token)
 
       toast.success(response.data.message)
-    
+      setIsLoggedIn(true)
+      navigate("/")
       
     } catch (error) {
-
+  console.log(error.response?.data?.message)
       toast.error(
         error.response?.data?.message || "Login failed"
       )
