@@ -188,32 +188,20 @@ const updateProfile = async (req, res) => {
 
     try {
 
-        const {
-            name,
-            phone,
-            careerGoal,
-            profileImage,
-            city,
-            country
-        } = req.body
+        console.log(req.body)
+        console.log(req.user)
 
         const user = await User.findByPk(req.user.id)
 
-        if (!user) {
+        console.log(user)
 
+        if (!user) {
             return res.status(404).json({
                 message: "User not found"
             })
-
         }
 
-        // Update fields
-        user.name = name || user.name
-        user.phone = phone || user.phone
-        user.careerGoal = careerGoal || user.careerGoal
-        user.profileImage = profileImage || user.profileImage
-        user.city = city || user.city
-        user.country = country || user.country
+        Object.assign(user, req.body)
 
         await user.save()
 

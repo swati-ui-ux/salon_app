@@ -6,8 +6,16 @@ const JobApplication = require("../models/jobApplication")
 const createJobApplication = async (req, res) => {
 
     try {
-        const resume = req.file ? req.file.filename : ""
-        // console.log(req.file)
+
+        let resume = ""
+
+          if (req.file) {
+
+            resume = `/uploads/${req.file.filename}`
+
+        }
+
+
         const {
             companyName,
             jobTitle,
@@ -21,6 +29,7 @@ const createJobApplication = async (req, res) => {
         } = req.body
 
         // Validation
+
         if (
             !companyName ||
             !jobTitle ||
@@ -28,12 +37,16 @@ const createJobApplication = async (req, res) => {
         ) {
 
             return res.status(400).json({
-                message: "companyName, jobTitle and applicationDate are required"
+
+                message:
+                    "companyName, jobTitle and applicationDate are required"
+
             })
 
         }
 
         // Create Application
+
         const application = await JobApplication.create({
 
             companyName,
@@ -45,29 +58,36 @@ const createJobApplication = async (req, res) => {
             applicationDate,
             notes,
             followUpDate,
-           resume,
-            // Logged in user id
+            resume,
+
             UserId: req.user.id
 
         })
 
-        // Response
         res.status(201).json({
-            message: "Job Application Created Successfully",
+
+            message:
+                "Job Application Created Successfully",
+
             application
+
         })
 
     } catch (error) {
 
-        console.log(error.message)
+        console.log(error)
 
         res.status(500).json({
+
             message: "Server Error"
+
         })
 
     }
 
 }
+
+
 
 const getAllApplications = async (req, res) => {
     try {

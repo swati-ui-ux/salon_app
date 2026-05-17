@@ -347,9 +347,9 @@ const [totalPages, setTotalPages] = useState(1)
 
                   {/* Notes */}
 
-                  <p className="text-gray-600 mt-4">
+                  <p className="text-gray-600 mt-4 mb-4">
 
-                    <span className="font-semibold">
+                    <span className="font-semibold ">
 
                       Notes:
 
@@ -360,22 +360,21 @@ const [totalPages, setTotalPages] = useState(1)
                     {app.notes || "No Notes"}
 
                   </p>
-                  {
-  app.resume && (
+               <a
 
-    <a
-      href={`http://localhost:5000/uploads/${app.resume}`}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-block mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-    >
+  href={`http://localhost:5000${app.resume}`}
 
-      View Resume
+  target="_blank"
 
-    </a>
+  rel="noreferrer"
 
-  )
-}
+  className="text-blue-500 underline"
+
+>
+
+  View Resume
+
+</a>
 
                   {/* Buttons */}
 

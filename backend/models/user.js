@@ -3,6 +3,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/db")
 const User = sequelize.define("User", {
+  
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -38,6 +39,27 @@ const User = sequelize.define("User", {
     ),
     defaultValue: "Fresher",
   },
+
+  careerGoal: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+
+  profileImage: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+
+  city: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
 });
 
 module.exports = User

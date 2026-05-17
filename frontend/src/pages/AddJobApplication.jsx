@@ -21,19 +21,33 @@ const navigate = useNavigate()
 
   })
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
 
-    const { name, value ,files} = e.target
+  const { name, value, files } = e.target
+
+  if (name === "resume") {
 
     setFormData({
 
       ...formData,
 
-      [name]: files?files[0]:value
+      resume: files[0]
+
+    })
+
+  } else {
+
+    setFormData({
+
+      ...formData,
+
+      [name]: value
 
     })
 
   }
+
+}
 
   const handleSubmit = async (e) => {
 
@@ -53,10 +67,19 @@ const response = await api.post(
 
   "/applications/create",
 
-  data
+  data,
+ {
+
+    headers: {
+
+      "Content-Type": "multipart/form-data"
+
+    }
+
+  }
 
 )
-toast.success(response.message)
+toast.success(response.data.message)
       console.log(response)
       // Reset form
       setFormData({
@@ -96,7 +119,12 @@ toast.success(response.message)
         <h1 className="text-3xl font-bold text-center mb-8">
           Add Job Application
         </h1>
-
+          <Link
+            to="/all-applications"
+            className=" text-black text-xl font-bold p-2 bg-gray-300 mb-4 absolute right-10 top-25 rounded-xl"
+          >
+            X
+          </Link>
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -156,7 +184,8 @@ toast.success(response.message)
 
   <input
     type="file"
-    name="resume"
+                name="resume"
+             accept=".pdf"
     onChange={handleChange}
     className="w-full border p-3 rounded-xl bg-white"
   />
@@ -241,12 +270,7 @@ toast.success(response.message)
           >
             Add Application
             </button>
-             <Link
-            to="/all-applications"
-            className="w-full bg-green-500 hover:bg-blue-600 text-white p-3 rounded-xl"
-          >
-            Go back
-          </Link>
+            
 
         </form>
 

@@ -1,11 +1,11 @@
 const express = require("express")
 const { createJobApplication, getAllApplications, deleteApplication, updateApplication, getSingleApplication } = require("../controllers/jobApplicationController")
-const upload = require("../middlewares/upload")
+const upload = require("../middlewares/multer.middleware")
 const router = express.Router()
 const authMiddleware = require("../middlewares/authMiddleware")
 router.post('/create',authMiddleware,upload.single("resume"),createJobApplication)
 router.get("/all",authMiddleware, getAllApplications)
 router.delete("/:id", authMiddleware, deleteApplication)
-router.put("/:id", authMiddleware, updateApplication)
+router.put("/:id", authMiddleware,updateApplication)
 router.get("/:id",authMiddleware,getSingleApplication)
 module.exports = router
