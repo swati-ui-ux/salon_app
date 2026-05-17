@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
+import api from '../utils/api'
 
 const Register = () => {
 
@@ -35,8 +36,8 @@ const Register = () => {
 
     try {
 
-      const response = await axios.post(
-        "http://localhost:5000/user/register",
+      const response = await api.post(
+        "/user/register",
         formData
       )
 
