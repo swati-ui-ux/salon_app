@@ -8,9 +8,21 @@ const sequelize = require("./config/db")
 const path = require('path')
 
 const cors = require("cors")
-app.use(cors());
-app.use(express.json())
+app.use(cors({
 
+    origin: [
+
+        "http://localhost:5173",
+
+        "https://job-tracker-backend-jykl.onrender.com"
+
+    ],
+
+    credentials: true
+
+}));
+app.use(express.json())
+// https://job-tracker-backend-jykl.onrender.com
 
 const userRouter = require("./routers/userRouter")
 require("./models/user")
