@@ -14,13 +14,14 @@ app.use(cors({
 
         "http://localhost:5173",
 
-        "https://job-tracker-backend-jykl.onrender.com"
+        "https://job-tracker-frontend-0u45.onrender.com"
 
     ],
 
     credentials: true
 
-}));
+}))
+
 app.use(express.json())
 // https://job-tracker-backend-jykl.onrender.com
 
