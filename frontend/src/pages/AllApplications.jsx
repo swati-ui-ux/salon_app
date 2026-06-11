@@ -116,6 +116,37 @@ const [totalPages, setTotalPages] = useState(1)
 
   }
 
+  
+  
+const groupedApplications = applications.reduce(
+
+  (groups, app) => {
+
+    const today = new Date()
+
+    const appDate = new Date(app.applicationDate)
+
+    const formattedDate =
+      appDate.toDateString() === today.toDateString()
+        ? "Today"
+        : appDate.toLocaleDateString()
+
+    if (!groups[formattedDate]) {
+
+      groups[formattedDate] = []
+
+    }
+
+    groups[formattedDate].push(app)
+
+    return groups
+
+  },
+
+  {}
+
+)
+  
   return (
 
     <div className="min-h-screen  bg-gray-100 p-6">
@@ -245,172 +276,205 @@ const [totalPages, setTotalPages] = useState(1)
 
         ) : (
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+         Object.entries(groupedApplications).map(
 
-            {
+  ([date, apps]) => (
 
-              applications.map((app) => (
+    <div key={date} className="mb-10">
 
-                <div
-                  key={app.id}
-                  className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition duration-300"
+      {/* Date Heading */}
+
+      <h2 className="text-2xl font-bold text-blue-600 mb-6">
+
+        {date}
+
+      </h2>
+
+      {/* Applications */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+        {
+
+          apps.map((app) => (
+
+            <div
+              key={app.id}
+              className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition duration-300"
+            >
+
+              {/* Company */}
+
+              <h2 className="text-2xl font-bold text-gray-800">
+
+                {app.companyName}
+
+              </h2>
+
+              {/* Job Title */}
+
+              <p className="text-gray-600 mt-3">
+
+                <span className="font-semibold">
+
+                  Job Title:
+
+                </span>
+
+                {" "}
+
+                {app.jobTitle}
+
+              </p>
+
+              {/* Location */}
+
+              <p className="text-gray-600 mt-2">
+
+                <span className="font-semibold">
+
+                  Location:
+
+                </span>
+
+                {" "}
+
+                {app.jobLocation || "N/A"}
+
+              </p>
+
+              {/* Salary */}
+
+              <p className="text-gray-600 mt-2">
+
+                <span className="font-semibold">
+
+                  Salary:
+
+                </span>
+
+                {" "}
+
+                {app.salary || "N/A"}
+
+              </p>
+
+              {/* Status */}
+
+              <div className="mt-4">
+
+                <span
+                  className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(app.status)}`}
                 >
 
-                  {/* Company */}
+                  {app.status}
 
-                  <h2 className="text-2xl font-bold text-gray-800">
+                </span>
 
-                    {app.companyName}
+              </div>
 
-                  </h2>
+              {/* Applied Date */}
 
-                  {/* Job Title */}
+              <p className="text-gray-600 mt-4">
 
-                  <p className="text-gray-600 mt-3">
+                <span className="font-semibold">
 
-                    <span className="font-semibold">
+                  Applied On:
 
-                      Job Title:
+                </span>
 
-                    </span>
+                {" "}
 
-                    {" "}
+                {
+                  new Date(app.applicationDate)
+                    .toLocaleDateString()
+                }
 
-                    {app.jobTitle}
+              </p>
 
-                  </p>
+              {/* Notes */}
 
-                  {/* Location */}
+              <p className="text-gray-600 mt-4 mb-4">
 
-                  <p className="text-gray-600 mt-2">
+                <span className="font-semibold">
 
-                    <span className="font-semibold">
+                  Notes:
 
-                      Location:
+                </span>
 
-                    </span>
+                {" "}
 
-                    {" "}
+                {app.notes || "No Notes"}
 
-                    {app.jobLocation || "N/A"}
+              </p>
 
-                  </p>
+              {/* Resume */}
 
-                  {/* Salary */}
+              {
 
-                  <p className="text-gray-600 mt-2">
+                app.resume && (
 
-                    <span className="font-semibold">
+                  <a
 
-                      Salary:
+                    href={app.resume}
 
-                    </span>
+                    target="_blank"
 
-                    {" "}
+                    rel="noreferrer"
 
-                    {app.salary || "N/A"}
+                    className="text-blue-500 underline"
 
-                  </p>
+                  >
 
-                  {/* Status */}
+                    View Resume
 
-                  <div className="mt-4">
+                  </a>
 
-                    <span
-                      className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(app.status)}`}
-                    >
+                )
 
-                      {app.status}
+              }
 
-                    </span>
+              {/* Buttons */}
 
-                  </div>
+              <div className="flex gap-3 mt-6">
 
-                  {/* Date */}
+                <button
+                  onClick={() =>
+                    navigate(`/edit-application/${app.id}`)
+                  }
+                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-300"
+                >
 
-                  <p className="text-gray-600 mt-4">
+                  Edit
 
-                    <span className="font-semibold">
+                </button>
 
-                      Applied On:
+                <button
+                  onClick={() =>
+                    deleteApplication(app.id)
+                  }
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl transition duration-300"
+                >
 
-                    </span>
+                  Delete
 
-                    {" "}
+                </button>
 
-                    {
-                      new Date(app.applicationDate)
-                        .toLocaleDateString()
-                    }
+              </div>
 
-                  </p>
+            </div>
 
-                  {/* Notes */}
+          ))
 
-                  <p className="text-gray-600 mt-4 mb-4">
+        }
 
-                    <span className="font-semibold ">
+      </div>
 
-                      Notes:
+    </div>
 
-                    </span>
+  )
 
-                    {" "}
-
-                    {app.notes || "No Notes"}
-
-                  </p>
-               <a
-
-  href={`http://localhost:5000${app.resume}`}
-
-  target="_blank"
-
-  rel="noreferrer"
-
-  className="text-blue-500 underline"
-
->
-
-  View Resume
-
-</a>
-
-                  {/* Buttons */}
-
-                  <div className="flex gap-3 mt-6">
-
-                    <button
-                      onClick={() =>
-                        navigate(`/edit-application/${app.id}`)
-                      }
-                      className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-300"
-                    >
-
-                      Edit
-
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        deleteApplication(app.id)
-                      }
-                      className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl transition duration-300"
-                    >
-
-                      Delete
-
-                    </button>
-
-                  </div>
-
-                </div>
-
-              ))
-
-            }
-
-          </div>
+)
 
         )
 

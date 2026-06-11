@@ -13,7 +13,7 @@ app.use(cors({
     origin: [
 
         "http://localhost:5173",
-
+"http://localhost:5174",
         "https://job-tracker-frontend-0u45.onrender.com"
 
     ],
@@ -49,7 +49,7 @@ app.use((req, res) => {
    res.status(404).send("<h1>404 not found</h1>")
 })
 
-sequelize.sync({alter:true}).then(() => {
+sequelize.sync().then(() => {
 console.log("db is ok")
 }).catch((err)=>{
 console.log("Error in db",err)
