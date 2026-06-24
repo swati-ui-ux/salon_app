@@ -14,7 +14,7 @@ app.use(cors({
 
         "http://localhost:5173",
 "http://localhost:5174",
-        "https://job-tracker-frontend-0u45.onrender.com"
+        process.env.FRONTEND_URL
 
     ],
 
