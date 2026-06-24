@@ -8,6 +8,7 @@ const sequelize = require("./config/db")
 const path = require('path')
 
 const cors = require("cors")
+console.log("frontend url 💌💌💌💌💌💌",process.env.FRONTEND_URL)
 app.use(cors({
 
     origin: [

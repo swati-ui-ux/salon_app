@@ -12,7 +12,6 @@ const sequelize = new Sequelize(
         port: process.env.DB_PORT,        
     }
 )
-    console.log("db config h","db name:", process.env.DB_NAME, "db user:", process.env.DB_USER, "db password:", process.env.DB_PASSWORD, "db host:", process.env.DB_HOST, "db port:", process.env.DB_PORT)
     ; (async (params) => {
     try {
         sequelize.authenticate();
