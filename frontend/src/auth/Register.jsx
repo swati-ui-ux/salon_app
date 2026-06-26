@@ -42,7 +42,6 @@ const Register = () => {
       )
 
       toast.success(response.data.message)
-     console.log(response)
       navigate("/")
 
     } catch (error) {

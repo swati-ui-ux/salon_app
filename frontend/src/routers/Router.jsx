@@ -21,9 +21,11 @@ const Router = () => {
   const [isOpen,setIsOpen] = useState(false)
     useEffect(()=>{
         const token = localStorage.getItem("token")
-        if (token) {
-        setIsLoggedIn(true)
-        }
+         if (token) {
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+          }
     },[])
     return (
         <>

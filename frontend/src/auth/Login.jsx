@@ -34,7 +34,6 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
         formData
       )
 
-      console.log(response)
       
       localStorage.setItem("token", response.data.token)
 
@@ -46,8 +45,7 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
       console.log(error.response?.data?.message)
       console.log(error)
       toast.error(
-        error.response?.data?.message || "Login failed"
-      )
+        error.response?.data?.message)
 
     }
 
