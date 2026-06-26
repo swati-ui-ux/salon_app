@@ -90,31 +90,27 @@ const [totalPages, setTotalPages] = useState(1)
 
   // Status Colors
 
-  const getStatusColor = (status) => {
+const getStatusColor = (status) => {
+  switch (status) {
+    case "Applied":
+      return "bg-blue-500/20 text-blue-300 border-blue-500/30";
 
-    switch (status) {
+    case "Interviewed":
+      return "bg-green-500/20 text-green-300 border-green-500/30";
 
-      case "Applied":
-        return "bg-blue-100 text-blue-600"
+    case "Rejected":
+      return "bg-red-500/20 text-red-300 border-red-500/30";
 
-      case "Interviewed":
-        return "bg-green-100 text-green-600"
+    case "Offered":
+      return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
 
-      case "Rejected":
-        return "bg-red-100 text-red-600"
+    case "Hired":
+      return "bg-purple-500/20 text-purple-300 border-purple-500/30";
 
-      case "Offered":
-        return "bg-yellow-100 text-yellow-700"
-
-      case "Hired":
-        return "bg-purple-100 text-purple-700"
-
-      default:
-        return "bg-gray-100 text-gray-600"
-
-    }
-
+    default:
+      return "bg-slate-700 text-gray-300 border-slate-600";
   }
+};
 
   
   
@@ -149,16 +145,21 @@ const groupedApplications = applications.reduce(
   
   return (
 
-    <div className="min-h-screen  bg-gray-100 p-6">
+<div className="min-h-screen bg-[#0f172a] p-6 text-white">
 
       {/* Heading */}
-      <div className='  mx-auto mt-16 mb-8 lg:w-[80%]  rounded-xl shadow-xl shadow-gray-500 p-4'>
-          <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+     <div className="mx-auto mt-16 mb-8 lg:w-[80%] rounded-2xl bg-[#1e293b] border border-slate-700 shadow-2xl p-6">
+          <h1 className="text-4xl font-bold text-center mb-8 text-white">
 
         My Applications
 
           </h1>
-          <Link to='/add-applications' className='p-4 m-2 bg-blue-500 rounded-md text-white absolute right-0 top-15 ' >Add JobApplication</Link>
+           <Link
+              to="/add-applications"
+              className="absolute right-10 top-18  items-center justify-center  px-6 py-3 rounded-xl bg-cyan-500/15 backdrop-blur-md border border-cyan-400/30 text-cyan-300 font-semibold hover:bg-cyan-500 hover:text-white hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-500/40 hover:-translate-y-1 active:scale-95 transition-all duration-300"
+            >
+              ➕ Add Job Application
+            </Link>
 
       {/* Search */}
 
@@ -169,7 +170,7 @@ const groupedApplications = applications.reduce(
           placeholder="Search by company or job title..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full border border-gray-300 p-4 rounded-2xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full bg-[#0f172a] border border-slate-600 text-white placeholder-gray-400 p-4 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
         />
 
         </div>
@@ -182,7 +183,7 @@ const groupedApplications = applications.reduce(
   <select
     value={status}
     onChange={(e) => setStatus(e.target.value)}
-    className="w-full border p-3 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+   className="w-full bg-[#0f172a] border border-slate-600 text-white p-3 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500"
   >
 
     <option value="">
@@ -219,7 +220,7 @@ const groupedApplications = applications.reduce(
 
   <div>
 
-    <label className="block mb-2 font-semibold">
+    <label className="block mb-2 font-semibold text-gray-300">
       Start Date
     </label>
 
@@ -227,7 +228,7 @@ const groupedApplications = applications.reduce(
       type="date"
       value={startDate}
       onChange={(e) => setStartDate(e.target.value)}
-      className="w-full border p-3 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-blue-400"
+      className="w-full bg-[#0f172a] border border-slate-600 text-white p-3 rounded-xl outline-none focus:ring-2 focus:ring-cyan-500"
     />
 
   </div>
@@ -236,7 +237,7 @@ const groupedApplications = applications.reduce(
 
   <div>
 
-    <label className="block mb-2 font-semibold">
+    <label className="block mb-2 font-semibold text-gray-300">
       End Date
     </label>
 
@@ -258,15 +259,15 @@ const groupedApplications = applications.reduce(
       {
         applications.length === 0 ? (
 
-          <div className="bg-white rounded-2xl shadow-md p-10 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-            <h2 className="text-2xl font-semibold text-gray-600">
+            <h2 className="text-2xl font-semibold text-white">
 
               No applications found 🚀
 
             </h2>
 
-            <p className="text-gray-500 mt-2">
+            <p className="text-gray-400 mt-2">
 
               Start adding your job applications.
 
@@ -284,7 +285,7 @@ const groupedApplications = applications.reduce(
 
       {/* Date Heading */}
 
-      <h2 className="text-2xl font-bold text-blue-600 mb-6">
+      <h2 className="text-2xl font-bold text-cyan-400 mb-6">
 
         {date}
 
@@ -292,7 +293,7 @@ const groupedApplications = applications.reduce(
 
       {/* Applications */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
         {
 
@@ -300,12 +301,12 @@ const groupedApplications = applications.reduce(
 
             <div
               key={app.id}
-              className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition duration-300"
+              className="bg-[#1e293b] border border-slate-700 rounded-2xl p-6  shadow-lg hover:shadow-cyan-500/20 hover:border-cyan-500 hover:-translate-y-1 transition-all duration-300"
             >
 
               {/* Company */}
 
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="text-2xl font-bold text-white">
 
                 {app.companyName}
 
@@ -313,7 +314,7 @@ const groupedApplications = applications.reduce(
 
               {/* Job Title */}
 
-              <p className="text-gray-600 mt-3">
+              <p className="text-gray-300 mt-3">
 
                 <span className="font-semibold">
 
@@ -329,7 +330,7 @@ const groupedApplications = applications.reduce(
 
               {/* Location */}
 
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-300 mt-2">
 
                 <span className="font-semibold">
 
@@ -345,7 +346,7 @@ const groupedApplications = applications.reduce(
 
               {/* Salary */}
 
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-300 mt-2">
 
                 <span className="font-semibold">
 
@@ -364,7 +365,7 @@ const groupedApplications = applications.reduce(
               <div className="mt-4">
 
                 <span
-                  className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(app.status)}`}
+                 className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide border ${getStatusColor(app.status)}`}
                 >
 
                   {app.status}
@@ -375,9 +376,9 @@ const groupedApplications = applications.reduce(
 
               {/* Applied Date */}
 
-              <p className="text-gray-600 mt-4">
+              <p className="text-gray-300 mt-4">
 
-                <span className="font-semibold">
+                <span className="text-gray-300 mt-4 mb-4">
 
                   Applied On:
 
@@ -394,7 +395,7 @@ const groupedApplications = applications.reduce(
 
               {/* Notes */}
 
-              <p className="text-gray-600 mt-4 mb-4">
+              <p className="text-gray-300 mt-4 mb-4">
 
                 <span className="font-semibold">
 
@@ -422,7 +423,7 @@ const groupedApplications = applications.reduce(
 
                     rel="noreferrer"
 
-                    className="text-blue-500 underline"
+                    className="text-cyan-400 hover:text-cyan-300 underline transition"
 
                   >
 
@@ -442,7 +443,7 @@ const groupedApplications = applications.reduce(
                   onClick={() =>
                     navigate(`/edit-application/${app.id}`)
                   }
-                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl transition duration-300"
+                 className="flex-1 bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-2.5 rounded-xl font-semibold shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all duration-300"
                 >
 
                   Edit
@@ -453,7 +454,7 @@ const groupedApplications = applications.reduce(
                   onClick={() =>
                     deleteApplication(app.id)
                   }
-                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl transition duration-300"
+                 className="flex-1 bg-linear-to-r from-red-500 to-rose-500 hover:from-red-400 hover:to-rose-400 text-white py-2.5 rounded-xl font-semibold shadow-md shadow-red-400/20 hover:shadow-red-400/40 hover:scale-105 active:scale-95 transition-all duration-300"
                 >
 
                   Delete
@@ -487,7 +488,7 @@ const groupedApplications = applications.reduce(
 
     onClick={() => setPage(page - 1)}
 
-    className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-400"
+    className="bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white px-5 py-2 rounded-xl disabled:bg-slate-700 disabled:cursor-not-allowed transition-all duration-300"
 
   >
     Prev
@@ -505,7 +506,7 @@ const groupedApplications = applications.reduce(
 
     onClick={() => setPage(page + 1)}
 
-    className="bg-blue-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-400"
+    className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-4 py-2 rounded-lg disabled:bg-gray-400"
 
   >
     Next

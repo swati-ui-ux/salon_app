@@ -8,14 +8,13 @@ const sequelize = require("./config/db")
 const path = require('path')
 
 const cors = require("cors")
-console.log("frontend url 💌💌💌💌💌💌",process.env.FRONTEND_URL)
 app.use(cors({
 
     origin: [
 
+        process.env.FRONTEND_URL,
         "http://localhost:5173",
 "http://localhost:5174",
-        process.env.FRONTEND_URL
 
     ],
 
@@ -51,7 +50,7 @@ app.use((req, res) => {
 })
 
 sequelize.sync().then(() => {
-console.log("db is ok")
+console.log("db connected")
 }).catch((err)=>{
 console.log("Error in db",err)
 })

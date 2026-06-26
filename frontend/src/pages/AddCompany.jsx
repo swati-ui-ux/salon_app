@@ -138,20 +138,18 @@ const deleteCompany = async (id) => {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-6">
-
+<div className="min-h-screen bg-gray-950 text-white p-6">
       {/* FORM */}
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-2xl mx-auto">
-
-        <h1 className="text-3xl font-bold text-center mb-8">
+<div className="bg-gray-900 border border-gray-800 shadow-xl rounded-2xl p-8 max-w-5xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-8 text-white">
           Add Company
         </h1>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4"
-        >
+       <form
+  onSubmit={handleSubmit}
+  className="grid grid-cols-1 md:grid-cols-2 gap-4"
+>
 
           <input
             type="text"
@@ -159,7 +157,7 @@ const deleteCompany = async (id) => {
             placeholder="Company Name"
             value={formData.companyName}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <input
@@ -168,7 +166,7 @@ const deleteCompany = async (id) => {
             placeholder="Industry"
             value={formData.industry}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <input
@@ -177,7 +175,7 @@ const deleteCompany = async (id) => {
             placeholder="Company Size"
             value={formData.companySize}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <input
@@ -186,7 +184,7 @@ const deleteCompany = async (id) => {
             placeholder="Website"
             value={formData.website}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <input
@@ -195,7 +193,7 @@ const deleteCompany = async (id) => {
             placeholder="HR Name"
             value={formData.hrName}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <input
@@ -204,7 +202,7 @@ const deleteCompany = async (id) => {
             placeholder="HR Email"
             value={formData.hrEmail}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <input
@@ -213,7 +211,7 @@ const deleteCompany = async (id) => {
             placeholder="Location"
             value={formData.location}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <textarea
@@ -221,12 +219,13 @@ const deleteCompany = async (id) => {
             placeholder="Notes"
             value={formData.notes}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl h-28"
+           className="md:col-span-2 w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl h-32 focus:outline-none focus:border-blue-500"
           />
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
+            className="md:col-span-2 w-full bg-gray-950 hover:bg-gray-800  text-white p-3 rounded-xl transition
+  "
           >
             Add Company
           </button>
@@ -239,16 +238,24 @@ const deleteCompany = async (id) => {
 
       <div className="mt-12">
 
-        <h1 className="text-3xl font-bold text-center mb-8">
+        <h1 className="text-3xl font-bold text-center mb-8 text-white">
           My Companies
         </h1>
 
         {
           companies.length === 0 ? (
 
-            <p className="text-center text-gray-500">
-              No companies found
-            </p>
+           <div className="text-center py-20">
+  <p className="text-6xl mb-4">🏢</p>
+
+  <h3 className="text-2xl font-semibold text-gray-300">
+    No Companies Added Yet
+  </h3>
+
+  <p className="text-gray-500 mt-2">
+    Add your first company to start tracking applications.
+  </p>
+</div>
 
           ) : (
 
@@ -259,14 +266,23 @@ const deleteCompany = async (id) => {
 
                   <div
                     key={company.id}
-                    className="bg-white shadow-lg rounded-2xl p-6"
+                   className="
+bg-gray-900
+border
+border-gray-800
+rounded-2xl
+p-6
+hover:border-blue-500
+transition-all
+duration-300
+"
                   >
 
-                    <h2 className="text-2xl font-bold">
+                    <h2 className="text-2xl font-bold text-white">
                       {company.companyName}
                     </h2>
 
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-300 mt-2">
                       <span className="font-semibold">
                         Industry:
                       </span>
@@ -275,7 +291,7 @@ const deleteCompany = async (id) => {
                       {company.industry || "N/A"}
                     </p>
 
-                    <p className="text-gray-600">
+                    <p className="text-gray-300 mt-2">
                       <span className="font-semibold">
                         Company Size:
                       </span>
@@ -284,7 +300,7 @@ const deleteCompany = async (id) => {
                       {company.companySize || "N/A"}
                     </p>
 
-                    <p className="text-gray-600">
+                    <p className="text-gray-300 mt-2">
                       <span className="font-semibold">
                         Website:
                       </span>
@@ -293,7 +309,7 @@ const deleteCompany = async (id) => {
                       {company.website || "N/A"}
                     </p>
 
-                    <p className="text-gray-600">
+                    <p className="text-gray-300 mt-2  ">
                       <span className="font-semibold">
                         HR Name:
                       </span>
@@ -302,7 +318,7 @@ const deleteCompany = async (id) => {
                       {company.hrName || "N/A"}
                     </p>
 
-                    <p className="text-gray-600">
+                    <p className="text-gray-300 mt-2  ">
                       <span className="font-semibold">
                         HR Email:
                       </span>
@@ -311,7 +327,7 @@ const deleteCompany = async (id) => {
                       {company.hrEmail || "N/A"}
                     </p>
 
-                    <p className="text-gray-600">
+                    <p className="text-gray-300 mt-2  ">
                       <span className="font-semibold">
                         Location:
                       </span>
@@ -320,7 +336,7 @@ const deleteCompany = async (id) => {
                       {company.location || "N/A"}
                     </p>
 
-                    <p className="text-gray-600 mt-3">
+                    <p className="text-gray-300 mt-3">
                       <span className="font-semibold">
                         Notes:
                       </span>

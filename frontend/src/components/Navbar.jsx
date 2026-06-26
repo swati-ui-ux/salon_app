@@ -1,49 +1,81 @@
-// components/Navbar.jsx
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+const Navbar = ({ setIsLoggedIn }) => {
+  const navigate = useNavigate();
 
-const Navbar = ({setIsLoggedIn}) => {
-    const navigate = useNavigate()
-    let handleLogout = () => {
-      localStorage.removeItem("token");
-      setIsLoggedIn(false)
-        navigate('/login')
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
+
   return (
+    <nav className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-2xl font-bold tracking-wide"
+        >
+          JobTracker
+        </Link>
 
-    <div className="bg-black text-white p-4 flex gap-6 justify-between">
-      <div className='flex gap-6'>
-         <Link to="/">
-        Home
-      </Link>
+        {/* Links */}
+        <div className="flex items-center gap-6 text-sm font-medium">
+          <Link
+            to="/"
+            className="hover:text-blue-400 transition"
+          >
+            Home
+          </Link>
 
-      <Link to="/dashboard">
-        Dashboard
-      </Link>
+          <Link
+            to="/dashboard"
+            className="hover:text-blue-400 transition"
+          >
+            Dashboard
+          </Link>
 
-      <Link to="/profile">
-        Profile
-      </Link>
+          <Link
+            to="/profile"
+            className="hover:text-blue-400 transition"
+          >
+            Profile
+          </Link>
 
-      <Link to="/all-applications">
-        Applications
-      </Link>
+          <Link
+            to="/all-applications"
+            className="hover:text-blue-400 transition"
+          >
+            Applications
+          </Link>
 
-      <Link to="/add-company">
-        Companies
-      </Link>
+          <Link
+            to="/add-company"
+            className="hover:text-blue-400 transition"
+          >
+            Companies
+          </Link>
 
-      <Link to="/add-reminder">
-        Reminders
-      </Link>
+          <Link
+            to="/add-reminder"
+            className="hover:text-blue-400 transition"
+          >
+            Reminders
+          </Link>
+
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition cursor-pointer"
+          >
+            Logout
+          </button>
+        </div>
       </div>
-     
-     <button onClick={handleLogout} className='cursor-pointer'>Logout</button>
-    </div>
+    </nav>
+  );
+};
 
-  )
-
-}
-
-export default Navbar
+export default Navbar;

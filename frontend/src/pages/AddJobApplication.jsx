@@ -112,16 +112,15 @@ toast.success(response.data.message)
 
   return (
 <>
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
+    <div className="min-h-screen bg-gray-950 flex justify-center items-center p-6">
 
-      <div className="bg-white shadow-xl rounded-3xl p-8 md:p-10 w-full max-w-6xl">
-
-        <h1 className="text-3xl font-bold text-center mb-8">
+     <div className="relative bg-gray-900 border border-gray-800 shadow-2xl rounded-3xl p-8 md:p-10 w-full max-w-6xl">
+        <h1 className="text-4xl font-bold text-center text-white mb-8">
           Add Job Application
         </h1>
           <Link
             to="/all-applications"
-            className=" text-black text-xl font-bold p-2 bg-gray-300 mb-4 absolute right-10 top-25 rounded-xl"
+            className=" absolute top-6 right-6 bg-red-600 hover:bg-red-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition duration-300"
           >
             X
           </Link>
@@ -136,7 +135,10 @@ toast.success(response.data.message)
             placeholder="Company Name"
             value={formData.companyName}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           />
 
           <input
@@ -145,7 +147,10 @@ toast.success(response.data.message)
             placeholder="Job Title"
             value={formData.jobTitle}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           />
 
           <input
@@ -154,7 +159,10 @@ toast.success(response.data.message)
             placeholder="Job Location"
             value={formData.jobLocation}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           />
 
           <input
@@ -163,7 +171,10 @@ toast.success(response.data.message)
             placeholder="Salary"
             value={formData.salary}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           />
 
           <input
@@ -172,7 +183,10 @@ toast.success(response.data.message)
             placeholder="Job Link"
             value={formData.jobLink}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           />
             <div>
 
@@ -187,7 +201,10 @@ toast.success(response.data.message)
                 name="resume"
              accept=".pdf"
     onChange={handleChange}
-    className="w-full border p-3 rounded-xl bg-white"
+    className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
   />
 
 </div>
@@ -195,7 +212,10 @@ toast.success(response.data.message)
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           >
 
             <option value="Applied">
@@ -235,7 +255,10 @@ toast.success(response.data.message)
               name="applicationDate"
               value={formData.applicationDate}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+  "
             />
 
           </div>
@@ -245,7 +268,10 @@ toast.success(response.data.message)
             placeholder="Notes"
             value={formData.notes}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl h-28"
+            className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
           />
 
           <div>
@@ -259,14 +285,17 @@ toast.success(response.data.message)
               name="followUpDate"
               value={formData.followUpDate}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="w-full bg-gray-800 border border-gray-700
+text-white placeholder-gray-400 p-3 rounded-xl focus:outline-none
+focus:border-blue-500
+"
             />
 
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
+            className="w-full bg-gray-950 hover:bg-gray-800 cursor-pointer text-white p-3 rounded-xl"
           >
             Add Application
             </button>

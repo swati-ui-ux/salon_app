@@ -69,7 +69,7 @@ const Dashboard = () => {
 
  return (
 
-  <div className="min-h-screen bg-gray-100 p-6">
+  <div className="min-h-screen -mb-16 bg-gray-950 text-white p-6">
 
     {/* Heading */}
 
@@ -83,7 +83,7 @@ const Dashboard = () => {
 
       {/* Total Applications */}
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg hover:border-gray-500 transition-all duration-300">
 
         <h2 className="text-xl font-semibold text-gray-600">
           Total Applications
@@ -97,7 +97,7 @@ const Dashboard = () => {
 
       {/* Interviewed */}
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg hover:border-gray-500 transition-all duration-300">
 
         <h2 className="text-xl font-semibold text-gray-600">
           Interviewed
@@ -111,7 +111,7 @@ const Dashboard = () => {
 
       {/* Rejected */}
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg hover:border-gray-500 transition-all duration-300">
 
         <h2 className="text-xl font-semibold text-gray-600">
           Rejected
@@ -125,7 +125,7 @@ const Dashboard = () => {
 
       {/* Offered */}
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg hover:border-gray-500 transition-all duration-300">
 
         <h2 className="text-xl font-semibold text-gray-600">
           Offers
@@ -139,7 +139,7 @@ const Dashboard = () => {
 
       {/* Companies */}
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg hover:border-gray-500 transition-all duration-300">
 
         <h2 className="text-xl font-semibold text-gray-600">
           Companies
@@ -153,7 +153,7 @@ const Dashboard = () => {
 
       {/* Reminders */}
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg hover:border-gray-500 transition-all duration-300">
 
         <h2 className="text-xl font-semibold text-gray-600">
           Pending Reminders
@@ -169,7 +169,7 @@ const Dashboard = () => {
 
     {/* Chart Section */}
 
-    <div className="bg-white shadow-lg rounded-2xl p-6 mt-10">
+    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mt-10">
 
       <h2 className="text-2xl font-bold mb-6 text-center">
         Application Status Chart

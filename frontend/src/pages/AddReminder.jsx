@@ -130,19 +130,18 @@ const handleSubmit = async (e) => {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-6">
-
+<div className="min-h-screen bg-gray-950 text-white p-6">
       {/* FORM */}
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-2xl mx-auto">
+      <div className="bg-gray-900 border border-gray-800 shadow-xl rounded-2xl p-8 max-w-4xl mx-auto">
 
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Add Reminder
-        </h1>
+      <h1 className="text-3xl font-bold text-center mb-8 text-white">
+    Add Reminder
+</h1>
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-4"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5"
         >
 
           <input
@@ -151,7 +150,7 @@ const handleSubmit = async (e) => {
             placeholder="Reminder Title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+           className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
           />
 
           <textarea
@@ -159,7 +158,7 @@ const handleSubmit = async (e) => {
             placeholder="Reminder Message"
             value={formData.message}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl h-28"
+            className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500 h-28"
           />
 
           <div>
@@ -173,14 +172,14 @@ const handleSubmit = async (e) => {
               name="reminderDate"
               value={formData.reminderDate}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="w-full bg-gray-800 border border-gray-700 text-white p-3 rounded-xl focus:outline-none focus:border-blue-500"
             />
 
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
+            className="w-full bg-gray-950 hover:bg-gray-800 cursor-pointer text-white p-3 rounded-xl"
           >
             Add Reminder
           </button>
@@ -213,18 +212,18 @@ const handleSubmit = async (e) => {
 
                   <div
                     key={reminder.id}
-                    className="bg-white shadow-lg rounded-2xl p-6"
+                    className="bg-gray-800 border border-blue-700 shadow-lg rounded-2xl p-6"
                   >
 
                     <h2 className="text-2xl font-bold">
                       {reminder.title}
                     </h2>
 
-                    <p className="text-gray-600 mt-3">
+                    <p className="text-gray-500 mt-3">
                       {reminder.message || "No Message"}
                     </p>
 
-                    <p className="text-gray-600 mt-3">
+                    <p className="text-gray-500 mt-3">
                       <span className="font-semibold">
                         Reminder Date:
                       </span>
@@ -235,7 +234,7 @@ const handleSubmit = async (e) => {
                       ).toLocaleString()}
                     </p>
 
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-500 mt-2">
                       <span className="font-semibold">
                         Status:
                       </span>
@@ -248,14 +247,14 @@ const handleSubmit = async (e) => {
 
                       <button
                         onClick={() => navigate(`/edit-reminder/${reminder.id}`)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
-                      >
+                        className="bg-blue-500/20 backdrop-blur-md border border-blue-400/40 text-blue-300  hover:text-white hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/40 hover:scale-105 active:scale-95 px-8 py-3 rounded-xl font-semibold transition-all duration-300"
+              >
                         Edit
                       </button>
 
                       <button
                         onClick={() => deleteReminder(reminder.id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                        className="bg-red-500/10 backdrop-blur-md border border-red-400/30 text-red-300  hover:text-white hover:border-red-500 hover:shadow-lg hover:shadow-red-500/40 hover:scale-105 active:scale-95 px-8 py-3 rounded-xl font-semibold transition-all duration-300"
                       >
                         Delete
                       </button>

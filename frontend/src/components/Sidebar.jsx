@@ -33,7 +33,7 @@ const Sidebar = ({setIsOpen,isOpen}) => {
 
   return (
 
-   <div className="w-64 min-h-screen bg-gray-400 shadow-2xl p-5 fixed left-0 top-0 z-50">
+   <div className="w-64 min-h-screen bg-gray-900 shadow-2xl p-5 fixed left-0 top-0 z-50">
 
       {/* Logo */}
 

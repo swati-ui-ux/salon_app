@@ -106,11 +106,11 @@ const EditReminder = () => {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
+    <div className="min-h-screen bg-[#0f172a] flex justify-center items-center p-6">
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-2xl">
+      <div className="w-full max-w-2xl bg-[#1e293b]/90 backdrop-blur-xl border border-slate-700 rounded-2xl shadow-2xl shadow-black/40 p-8" >
 
-        <h1 className="text-3xl font-bold text-center mb-8">
+        <h1 className="text-3xl font-bold text-center text-white mb-8">
           Edit Reminder
         </h1>
 
@@ -125,7 +125,7 @@ const EditReminder = () => {
             placeholder="Reminder Title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <textarea
@@ -133,12 +133,12 @@ const EditReminder = () => {
             placeholder="Reminder Message"
             value={formData.message}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl h-28"
+            className="w-full h-28 bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <div>
 
-            <label className="block mb-1 font-medium">
+            <label className="block mb-2 font-medium text-gray-300">
               Reminder Date
             </label>
 
@@ -147,7 +147,7 @@ const EditReminder = () => {
               name="reminderDate"
               value={formData.reminderDate}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
             />
 
           </div>
@@ -156,7 +156,7 @@ const EditReminder = () => {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full border p-3 rounded-xl"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           >
 
             <option value="Pending">
@@ -171,7 +171,7 @@ const EditReminder = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-xl"
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold p-3 rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-95 transition-all duration-300"
           >
             Update Reminder
           </button>

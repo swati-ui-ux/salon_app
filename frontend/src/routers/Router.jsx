@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Register from '../pages/Register'
-import Login from '../pages/Login'
+import Register from '../auth/Register'
+import Login from '../auth/Login'
 import Home from '../pages/Home'
 import { Route, Routes } from 'react-router-dom'
 import UpdateProfile from '../pages/Profile'
@@ -14,6 +14,7 @@ import EditReminder from '../pages/EditReminder'
 import Dashboard from '../pages/Dashboard'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
+import Footer from '../pages/Footer'
 // import {IconName} from "react-icons/fi"
 const Router = () => {
   let [isLoggedIn, setIsLoggedIn] = useState(null)
@@ -32,7 +33,7 @@ const Router = () => {
 
       {/* Mobile */}
 
-      <div className="block md:hidden">
+      <div className="block md:hidden border-b-2  bg-gray-900 ">
 
         {
           isOpen ? (
@@ -50,15 +51,15 @@ const Router = () => {
 
       <div className="hidden md:block">
 
-        <Navbar  setIsLoggedIn={setIsLoggedIn}/>
-
+                <Navbar setIsLoggedIn={setIsLoggedIn} />
+        {/* <Footer /> */}
       </div>
 
     </>
   )
 }
       <Routes>
-          <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
+          <Route path="/" element={isLoggedIn ? <Home /> : <Login isLoggedIn={isLoggedIn} />} />
           <Route path="/register" element={isLoggedIn ? <Home /> : <Register />} />
           
 
@@ -78,7 +79,10 @@ const Router = () => {
           <Route path="/add-reminder" element={isLoggedIn?<AddReminder />:<Login/>} />
           <Route path='/edit-reminder/:id' element={isLoggedIn?<EditReminder />:<Login/>} />
 
-    </Routes>
+        </Routes>
+          {isLoggedIn && (
+    <Footer />
+  )}
 </>
   )
 }
