@@ -57,14 +57,14 @@ const Register = () => {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6">
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md"
+        className="w-full max-w-md bg-[#1e293b]/90 backdrop-blur-xl border border-slate-700 rounded-2xl shadow-2xl shadow-black/40 p-8"
       >
 
-        <h1 className="text-3xl font-bold text-center mb-6">
+        <h1 className="text-3xl font-bold text-center text-white mb-8">
           Register
         </h1>
 
@@ -76,7 +76,7 @@ const Register = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <input
@@ -85,7 +85,7 @@ const Register = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <input
@@ -94,7 +94,7 @@ const Register = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <input
@@ -103,7 +103,7 @@ const Register = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <textarea
@@ -111,7 +111,7 @@ const Register = () => {
             name="careerGoal"
             value={formData.careerGoal}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none h-24"
+            className="w-full h-24 bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30 resize-none"
           />
 
           <input
@@ -120,7 +120,7 @@ const Register = () => {
             name="profileImage"
             value={formData.profileImage}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <input
@@ -129,7 +129,7 @@ const Register = () => {
             name="city"
             value={formData.city}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <input
@@ -138,11 +138,11 @@ const Register = () => {
             name="country"
             value={formData.country}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full bg-[#0f172a]/70 border border-slate-600 text-white placeholder-gray-400 p-3 rounded-xl outline-none transition-all duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
           />
 
           <button
-            className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition"
+            className="w-full bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold p-3 rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-95 transition-all duration-300"
           >
             Register
           </button>

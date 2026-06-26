@@ -55,14 +55,14 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-lg w-100"
+        className="bg-gray-800 border border-gray-600 p-8 rounded-2xl shadow-lg w-100"
       >
 
-        <h1 className="text-3xl font-bold text-center mb-6">
+        <h1 className="text-3xl text-gray-200 font-bold text-center mb-6">
           Login
         </h1>
 
@@ -74,7 +74,7 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full text-gray-100 border border-gray-500 p-3 rounded-lg outline-none"
           />
 
           <input
@@ -83,11 +83,11 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full border p-3 rounded-lg outline-none"
+            className="w-full border border-gray-500 text-gray-100 p-3 rounded-lg outline-none"
           />
 
           <button
-            className="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600"
+            className="w-full bg-gray-900 text-white p-3 rounded-lg hover:bg-gray-950 cursor-pointer"
           >
             Login
           </button>
