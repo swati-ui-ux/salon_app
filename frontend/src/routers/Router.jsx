@@ -61,7 +61,7 @@ const Router = () => {
   )
 }
       <Routes>
-          <Route path="/" element={isLoggedIn ? <Home /> : <Login isLoggedIn={isLoggedIn} />} />
+          <Route path="/" element={isLoggedIn ? <Home /> : <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={isLoggedIn ? <Home /> : <Register />} />
           
 

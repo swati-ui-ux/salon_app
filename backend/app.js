@@ -35,7 +35,7 @@ const jobApplicationRouter = require('./routers/jobApplicationRouter')
 const companyRoutes = require("./routers/companyRoutes")
 const reminderRoutes = require('./routers/reminderRoutes')
 const dashboardRoutes = require("./routers/dashboardRoutes")
-
+const authRoutes = require("./routers/authRoutes")
 
 app.use("/user", userRouter)
 app.use("/applications", jobApplicationRouter)
@@ -43,7 +43,7 @@ app.use("/companies", companyRoutes)
 app.use("/reminders", reminderRoutes)
 app.use("/dashboard", dashboardRoutes)
 app.use('/uploads', express.static("uploads"))
-
+app.use('/auth',authRoutes)
 
 app.use((req, res) => {
    res.status(404).send("<h1>404 not found</h1>")

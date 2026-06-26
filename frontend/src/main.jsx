@@ -5,10 +5,12 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+import {GoogleOAuthProvider} from "@react-oauth/google"
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <App />
     <ToastContainer />
+    </GoogleOAuthProvider>
   </BrowserRouter>
 )

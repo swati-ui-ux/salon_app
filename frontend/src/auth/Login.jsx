@@ -3,6 +3,8 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../utils/api'
+import { GoogleLogin } from "@react-oauth/google"
+
 
 const Login = ({isLoggedIn,setIsLoggedIn}) => {
 
@@ -12,6 +14,7 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
     password: ""
 
   })
+  const [isShowPassword,setIsShowPassword] = useState(false)
   const navigate= useNavigate()
 
   const handleChange = (e) => {
@@ -50,7 +53,27 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
     }
 
   }
+  
+const handleGoogleLogin = async (credentialResponse) => {
+  try {
+    const res = await api.post("/auth/google", {
+      token: credentialResponse.credential,
+    });
+    if (res.data.success) {
+      localStorage.setItem("token", res.data.token);
+      toast.success("Google Login Successful");
+      setIsLoggedIn(true);
+      navigate("/");
+    }
+  } catch (error) {
+    console.log(error);
 
+    toast.error(error.response?.data?.message);
+  }
+};
+
+
+  
   return (
 
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -74,24 +97,37 @@ const Login = ({isLoggedIn,setIsLoggedIn}) => {
             onChange={handleChange}
             className="w-full text-gray-100 border border-gray-500 p-3 rounded-lg outline-none"
           />
+        <div className="w-full border border-gray-500 text-gray-100 p-3 rounded-lg flex justify-between items-center">
+      <input
+        type={isShowPassword ? "text" : "password"}
+        placeholder="Password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        className="bg-transparent outline-none flex-1 text-gray-100"
+      />
 
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border border-gray-500 text-gray-100 p-3 rounded-lg outline-none"
-          />
+      <span
+        className="cursor-pointer select-none"
+        onClick={() => setIsShowPassword(!isShowPassword)}
+      >
+        {isShowPassword ? "🙈" : "👁️"}
+      </span>
+</div>
 
           <button
-            className="w-full bg-gray-900 text-white p-3 rounded-lg hover:bg-gray-950 cursor-pointer"
+            className="w-full bg-gray-900 text-white p-3 mb-4 rounded-lg hover:bg-gray-950 cursor-pointer"
           >
             Login
           </button>
-
         </div>
 
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() => {
+            console.log("Login failed")
+            }}
+          />
         <p className="mt-4 text-center">
 
           Don’t have an account?
